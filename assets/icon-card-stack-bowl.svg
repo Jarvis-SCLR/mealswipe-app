@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with rounded corners (iOS squircle approximation) -->
+  <rect width="1024" height="1024" rx="224" fill="url(#bgGradient)"/>
+  
+  <!-- Card Stack - Back card (darkest) -->
+  <g transform="translate(232, 180) rotate(-8, 280, 280)">
+    <rect x="0" y="0" width="320" height="420" rx="24" fill="#E8DFD6" opacity="0.6"/>
+  </g>
+  
+  <!-- Card Stack - Middle card -->
+  <g transform="translate(252, 200) rotate(-4, 280, 280)">
+    <rect x="0" y="0" width="320" height="420" rx="24" fill="#F0E8E0" opacity="0.8"/>
+  </g>
+  
+  <!-- Card Stack - Front card (brightest) -->
+  <g transform="translate(272, 220)">
+    <rect x="0" y="0" width="320" height="420" rx="24" fill="url(#cardGradient)"/>
+    
+    <!-- Bowl shape -->
+    <g transform="translate(90, 140)">
+      <!-- Bowl body (semicircle) -->
+      <path d="M0,80 Q0,160 70,160 Q140,160 140,80 L140,70 Q140,0 70,0 Q0,0 0,70 Z" fill="#FF6B6B"/>
+      <!-- Bowl rim highlight -->
+      <ellipse cx="70" cy="10" rx="60" ry="8" fill="#FF8E53"/>
+    </g>
+    
+    <!-- Floating ingredient dots -->
+    <!-- Green dot (leafy) -->
+    <circle cx="100" cy="110" r="24" fill="#4ECDC4">
+      <animate attributeName="cy" values="110;100;110" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Orange dot -->
+    <circle cx="160" cy="90" r="20" fill="#FF8E53">
+      <animate attributeName="cy" values="90;80;90" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Yellow dot -->
+    <circle cx="220" cy="105" r="18" fill="#FFE66D">
+      <animate attributeName="cy" values="105;95;105" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Swipe arrow hint -->
+    <g transform="translate(160, 340)">
+      <path d="M0,20 Q40,0 80,20" stroke="#FF6B6B" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M70,10 L82,20 L70,30" stroke="#FF6B6B" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+  
+  <!-- Curved swipe motion line (behind cards) -->
+  <path d="M680,300 Q780,400 720,550" stroke="url(#swipeGradient)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.7"/>
+  
+  <!-- Definitions -->
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5EB"/>
+      <stop offset="100%" stop-color="#FFE8D6"/>
+    </linearGradient>
+    
+    <!-- Card gradient (warm paper) -->
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBF8"/>
+      <stop offset="100%" stop-color="#FFF5EB"/>
+    </linearGradient>
+    
+    <!-- Swipe gradient -->
+    <linearGradient id="swipeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ECDC4"/>
+      <stop offset="100%" stop-color="#FF6B6B"/>
+    </linearGradient>
+    
+    <!-- Shadow filter -->
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+</svg>

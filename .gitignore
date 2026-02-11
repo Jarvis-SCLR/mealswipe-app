@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Env files (secrets)
+.env
+.env.local
+.env.*.local
+api/.env
+
+# Build outputs
+dist/
+build/
+.expo/
+*.hbc
+
+# iOS
+app/ios/Pods/
+app/ios/*.xcworkspace
+app/ios/build/
+*.ipa
+
+# Android
+app/android/.gradle/
+app/android/app/build/
+*.apk
+*.aab
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Vercel
+.vercel/

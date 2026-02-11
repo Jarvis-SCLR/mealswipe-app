@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background - Coral gradient -->
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  
+  <!-- Card stack (simplified) -->
+  <!-- Back card -->
+  <rect x="280" y="200" width="340" height="460" rx="32" fill="#FFFFFF" opacity="0.3" transform="rotate(-6, 450, 430)"/>
+  <!-- Middle card -->
+  <rect x="300" y="220" width="340" height="460" rx="32" fill="#FFFFFF" opacity="0.5" transform="rotate(-3, 470, 450)"/>
+  <!-- Front card -->
+  <rect x="320" y="240" width="340" height="460" rx="32" fill="#FFFFFF"/>
+  
+  <!-- Bowl on front card -->
+  <g transform="translate(380, 380)">
+    <!-- Bowl body -->
+    <path d="M0 60 C0 120, 110 120, 110 60 C110 30, 85 0, 55 0 C25 0, 0 30, 0 60Z" fill="#FF6B6B"/>
+    <!-- Bowl shine -->
+    <ellipse cx="55" cy="20" rx="35" ry="8" fill="#FF8E53" opacity="0.8"/>
+  </g>
+  
+  <!-- Floating ingredients -->
+  <circle cx="410" cy="340" r="28" fill="#4ECDC4"/>
+  <circle cx="490" cy="310" r="24" fill="#FFE66D"/>
+  <circle cx="560" cy="350" r="22" fill="#FF8E53"/>
+  
+  <!-- Swipe hint arrow -->
+  <g transform="translate(400, 580)">
+    <path d="M0 15 Q50 -5, 100 15" stroke="#FF6B6B" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M88 5 L102 15 L88 25" stroke="#FF6B6B" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5EB"/>
+      <stop offset="100%" stop-color="#FFEBD6"/>
+    </linearGradient>
+  </defs>
+</svg>

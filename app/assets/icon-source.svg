@@ -1,0 +1,43 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FDF6E9"/>
+      <stop offset="100%" style="stop-color:#F5E6D3"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  
+  <!-- Plate circle -->
+  <circle cx="512" cy="480" r="280" fill="#FFFFFF" stroke="#E8E0D5" stroke-width="8"/>
+  <circle cx="512" cy="480" r="240" fill="none" stroke="#E8E0D5" stroke-width="3"/>
+  
+  <!-- Fork (left) -->
+  <g transform="translate(280, 320) rotate(-25)">
+    <rect x="0" y="0" width="12" height="180" rx="6" fill="#2D2420"/>
+    <rect x="-8" y="180" width="28" height="120" rx="6" fill="#2D2420"/>
+    <!-- Fork tines -->
+    <rect x="-6" y="0" width="4" height="60" rx="2" fill="#2D2420"/>
+    <rect x="4" y="0" width="4" height="60" rx="2" fill="#2D2420"/>
+    <rect x="14" y="0" width="4" height="60" rx="2" fill="#2D2420"/>
+  </g>
+  
+  <!-- Knife (right) -->
+  <g transform="translate(720, 320) rotate(25)">
+    <rect x="0" y="0" width="12" height="180" rx="6" fill="#2D2420"/>
+    <rect x="-4" y="180" width="20" height="120" rx="6" fill="#2D2420"/>
+  </g>
+  
+  <!-- Heart in center of plate -->
+  <path d="M512 380 C480 350 430 350 430 410 C430 470 512 530 512 530 C512 530 594 470 594 410 C594 350 544 350 512 380Z" 
+        fill="#F5A962" stroke="#2D2420" stroke-width="6"/>
+  
+  <!-- Swipe arrow hint (subtle) -->
+  <path d="M620 700 L680 700 L660 680 M680 700 L660 720" 
+        stroke="#2D2420" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+  
+  <!-- App name area -->
+  <text x="512" y="880" font-family="Georgia, serif" font-size="72" font-weight="bold" fill="#2D2420" text-anchor="middle">MealSwipe</text>
+</svg>

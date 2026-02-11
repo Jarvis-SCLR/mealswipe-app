@@ -1,0 +1,82 @@
+{
+  "expo": {
+    "name": "Meal Swipe",
+    "slug": "meal-swipe",
+    "scheme": "mealswipe",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mealswipe.app",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "mealswipe"
+            ]
+          },
+          {
+            "CFBundleURLSchemes": [
+              "mealswipe"
+            ]
+          }
+        ],
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.mealswipe.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.1081935763088-4qf60k4369r5pitnlr2bbf5mipf8l1eo"
+        }
+      ],
+      "expo-secure-store",
+      [
+        "expo-apple-authentication",
+        {
+          "appleTeamId": "TJZQ3WN648"
+        }
+      ],
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.mealswipe.app",
+          "enableGooglePay": true
+        }
+      ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "4b8a8041-811b-4fd0-acf1-fb5643914f58"
+      }
+    },
+    "owner": "mealswipe-app"
+  }
+}
