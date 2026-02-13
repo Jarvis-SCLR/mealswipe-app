@@ -1,0 +1,65 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="100%" style="stop-color:#FF8F5C"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="4" dy="8" stdDeviation="15" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bg2)"/>
+  
+  <!-- Back card (tilted left) -->
+  <g transform="translate(512, 480) rotate(-8)">
+    <rect x="-180" y="-220" width="360" height="440" rx="24" fill="#FFF" opacity="0.4"/>
+  </g>
+  
+  <!-- Middle card (tilted right) -->
+  <g transform="translate(512, 480) rotate(5)">
+    <rect x="-180" y="-220" width="360" height="440" rx="24" fill="#FFF" opacity="0.6"/>
+  </g>
+  
+  <!-- Front card with food -->
+  <g filter="url(#shadow)">
+    <rect x="292" y="220" width="440" height="520" rx="32" fill="#FFF"/>
+    
+    <!-- Food image area -->
+    <rect x="320" y="250" width="384" height="280" rx="16" fill="#FDF8F4"/>
+    
+    <!-- Bowl of food -->
+    <ellipse cx="512" cy="420" rx="140" ry="50" fill="#8B4513"/>
+    <ellipse cx="512" cy="380" rx="130" ry="80" fill="#4CAF50"/>
+    <ellipse cx="490" cy="360" rx="40" ry="30" fill="#FF9800"/>
+    <ellipse cx="540" cy="375" rx="35" ry="25" fill="#F44336"/>
+    <circle cx="520" cy="350" r="15" fill="#FFEB3B"/>
+    
+    <!-- Heart icon (like indicator) -->
+    <g transform="translate(620, 280)">
+      <path d="M24 8 C24 3.6 20.4 0 16 0 C13.2 0 10.8 1.6 9.6 4 C8.4 1.6 6 0 3.2 0 C-1.2 0 -4.8 3.6 -4.8 8 C-4.8 16 9.6 28 9.6 28 C9.6 28 24 16 24 8Z" 
+            fill="#FF6B35" transform="scale(1.5)"/>
+    </g>
+    
+    <!-- Meal name placeholder -->
+    <rect x="340" y="560" width="200" height="24" rx="12" fill="#2D2420"/>
+    <rect x="340" y="600" width="140" height="16" rx="8" fill="#CCC"/>
+    
+    <!-- Rating stars -->
+    <g transform="translate(340, 650)">
+      <polygon points="12,0 15,8 24,9 17,15 19,24 12,19 5,24 7,15 0,9 9,8" fill="#FFD700" transform="scale(0.8)"/>
+      <polygon points="12,0 15,8 24,9 17,15 19,24 12,19 5,24 7,15 0,9 9,8" fill="#FFD700" transform="translate(25,0) scale(0.8)"/>
+      <polygon points="12,0 15,8 24,9 17,15 19,24 12,19 5,24 7,15 0,9 9,8" fill="#FFD700" transform="translate(50,0) scale(0.8)"/>
+      <polygon points="12,0 15,8 24,9 17,15 19,24 12,19 5,24 7,15 0,9 9,8" fill="#FFD700" transform="translate(75,0) scale(0.8)"/>
+      <polygon points="12,0 15,8 24,9 17,15 19,24 12,19 5,24 7,15 0,9 9,8" fill="#DDD" transform="translate(100,0) scale(0.8)"/>
+    </g>
+  </g>
+  
+  <!-- Swipe indicator arrow -->
+  <g transform="translate(780, 480)">
+    <path d="M0 -60 L0 60" stroke="#FFF" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+    <path d="M-15 30 L0 60 L15 30" stroke="#FFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.7"/>
+    <path d="M-15 -30 L0 -60 L15 -30" stroke="#FFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.7"/>
+  </g>
+</svg>

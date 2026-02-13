@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "name": "mealswipe-privacy",
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/privacy", "dest": "/index.html" },
+    { "src": "/support", "dest": "/support.html" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}

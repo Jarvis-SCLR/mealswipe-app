@@ -12,6 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect, router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Haptics from 'expo-haptics';
+import { Ionicons } from '@expo/vector-icons';
 
 import { Colors } from '../../constants/Colors';
 import { clearAllRecipes, getSavedCount } from '../../services/menuStorage';
@@ -24,6 +25,8 @@ import {
   formatReminderTime,
   type NotificationPrefs,
 } from '../../services/notificationService';
+import { getStreakData, recordDailyActivity, getStreakEmoji, type StreakData } from '../../services/streakService';
+import { getAchievementStatus } from '../../services/achievementService';
 
 const DIETARY_OPTIONS = [
   { id: 'vegetarian', label: 'Vegetarian', emoji: '🥬' },
@@ -51,14 +54,27 @@ export default function ProfileScreen() {
   const [allergies, setAllergies] = useState<string[]>([]);
   const [savedCount, setSavedCount] = useState(0);
   const [notifPrefs, setNotifPrefs] = useState<NotificationPrefs | null>(null);
+  const [streakData, setStreakData] = useState<StreakData>({ currentStreak: 0, longestStreak: 0, lastActivityDate: null, streakProtectors: 0, totalDaysActive: 0 });
+  const [achievementCount, setAchievementCount] = useState({ unlocked: 0, total: 0 });
 
   useFocusEffect(
     useCallback(() => {
       loadPreferences();
       loadStats();
       loadNotificationPrefs();
+      loadStreakAndAchievements();
     }, [])
   );
+
+  const loadStreakAndAchievements = async () => {
+    // Record daily activity and get streak
+    const streak = await recordDailyActivity();
+    setStreakData(streak);
+    
+    // Get achievement count
+    const status = await getAchievementStatus();
+    setAchievementCount({ unlocked: status.unlocked.length, total: status.total });
+  };
 
   const loadNotificationPrefs = async () => {
     const prefs = await getNotificationPrefs();
@@ -174,6 +190,24 @@ export default function ProfileScreen() {
     >
       <Text style={styles.headerTitle}>Settings</Text>
 
+      {/* Streak Banner */}
+      <TouchableOpacity 
+        style={styles.streakBanner}
+        onPress={() => router.push('/achievements')}
+      >
+        <View style={styles.streakLeft}>
+          <Text style={styles.streakEmoji}>{getStreakEmoji(streakData.currentStreak)}</Text>
+          <View>
+            <Text style={styles.streakCount}>{streakData.currentStreak} Day Streak</Text>
+            <Text style={styles.streakBest}>Best: {streakData.longestStreak} days</Text>
+          </View>
+        </View>
+        <View style={styles.achievementsBadge}>
+          <Text style={styles.achievementsBadgeText}>🏅 {achievementCount.unlocked}/{achievementCount.total}</Text>
+          <Ionicons name="chevron-forward" size={18} color={Colors.espresso} />
+        </View>
+      </TouchableOpacity>
+
       {/* Stats */}
       <View style={styles.statsRow}>
         <View style={styles.statBox}>
@@ -181,12 +215,12 @@ export default function ProfileScreen() {
           <Text style={styles.statLabel}>Recipes Saved</Text>
         </View>
         <View style={styles.statBox}>
-          <Text style={styles.statNumber}>{diets.length}</Text>
-          <Text style={styles.statLabel}>Diet Prefs</Text>
+          <Text style={styles.statNumber}>{streakData.totalDaysActive}</Text>
+          <Text style={styles.statLabel}>Days Active</Text>
         </View>
         <View style={styles.statBox}>
-          <Text style={styles.statNumber}>{allergies.length}</Text>
-          <Text style={styles.statLabel}>Allergies</Text>
+          <Text style={styles.statNumber}>{streakData.streakProtectors}</Text>
+          <Text style={styles.statLabel}>Protectors</Text>
         </View>
       </View>
 
@@ -448,6 +482,51 @@ const styles = StyleSheet.create({
   },
   bottomPadding: {
     height: 100,
+  },
+  // Streak banner styles
+  streakBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(245,169,98,0.08)',
+    borderRadius: 20,
+    padding: 16,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(245,169,98,0.3)',
+  },
+  streakLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  streakEmoji: {
+    fontSize: 36,
+  },
+  streakCount: {
+    fontFamily: 'DM Sans Bold',
+    fontSize: 18,
+    color: Colors.espresso,
+  },
+  streakBest: {
+    fontFamily: 'DM Sans',
+    fontSize: 13,
+    color: 'rgba(45,36,32,0.6)',
+    marginTop: 2,
+  },
+  achievementsBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: Colors.milk,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  achievementsBadgeText: {
+    fontFamily: 'DM Sans Medium',
+    fontSize: 14,
+    color: Colors.espresso,
   },
   // Notification styles
   notifSection: {

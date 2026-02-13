@@ -1,0 +1,46 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="100%" style="stop-color:#FF8F5C"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#F0F0F0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  
+  <!-- Plate/Dish - centered circle -->
+  <circle cx="512" cy="512" r="280" fill="url(#plate)" stroke="#E0E0E0" stroke-width="8"/>
+  <circle cx="512" cy="512" r="220" fill="none" stroke="#E8E8E8" stroke-width="4"/>
+  
+  <!-- Food on plate - simple stylized -->
+  <ellipse cx="512" cy="480" rx="120" ry="60" fill="#4CAF50"/>
+  <ellipse cx="480" cy="520" rx="80" ry="50" fill="#FF9800"/>
+  <ellipse cx="560" cy="540" rx="70" ry="45" fill="#F44336"/>
+  
+  <!-- Fork - left side -->
+  <g transform="translate(140, 300) rotate(-30, 60, 200)">
+    <rect x="55" y="80" width="10" height="280" rx="5" fill="#FFF"/>
+    <rect x="35" y="40" width="6" height="80" rx="3" fill="#FFF"/>
+    <rect x="47" y="40" width="6" height="90" rx="3" fill="#FFF"/>
+    <rect x="59" y="40" width="6" height="90" rx="3" fill="#FFF"/>
+    <rect x="71" y="40" width="6" height="80" rx="3" fill="#FFF"/>
+  </g>
+  
+  <!-- Knife - right side -->
+  <g transform="translate(740, 300) rotate(30, 60, 200)">
+    <rect x="55" y="80" width="12" height="280" rx="6" fill="#FFF"/>
+    <path d="M50 40 L72 40 L72 120 L50 100 Z" fill="#FFF"/>
+  </g>
+  
+  <!-- Swipe arrow hint -->
+  <g transform="translate(512, 820)">
+    <path d="M-80 0 L80 0" stroke="#FFF" stroke-width="8" stroke-linecap="round" opacity="0.8"/>
+    <path d="M50 -20 L80 0 L50 20" stroke="#FFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.8"/>
+  </g>
+</svg>

@@ -1,6 +1,7 @@
 // Menu Storage Service - Persists saved recipes to AsyncStorage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Recipe } from './recipeApi';
+import { recordRecipeAddToPlan } from './recipeApi';
 
 const MENU_STORAGE_KEY = 'savedMenuRecipes';
 
@@ -63,6 +64,9 @@ export async function scheduleRecipe(recipeId: string, date: string): Promise<vo
       r.id === recipeId ? { ...r, scheduledFor: date } : r
     );
     await AsyncStorage.setItem(MENU_STORAGE_KEY, JSON.stringify(updated));
+    
+    // Track engagement for community recipes (notifies creator)
+    recordRecipeAddToPlan(recipeId).catch(() => {}); // Fire and forget
   } catch (error) {
     console.warn('Error scheduling recipe:', error);
   }

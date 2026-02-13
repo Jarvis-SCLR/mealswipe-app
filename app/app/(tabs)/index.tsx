@@ -17,11 +17,14 @@ import { Colors } from '../../constants/Colors';
 import { RecipeCard } from '../../components/RecipeCard';
 import {
   getRecipes,
+  getRecipesWithCommunity,
   getUserPreferences,
   filterRecipesByPreferences,
+  recordRecipeLike,
   type Recipe,
 } from '../../services/recipeApi';
-import { saveRecipe } from '../../services/menuStorage';
+import { saveRecipe, getSavedCount } from '../../services/menuStorage';
+import { useSubscription, FREE_LIMITS } from '../../contexts/SubscriptionContext';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -34,6 +37,7 @@ export default function SwipeDeckScreen() {
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [likedCount, setLikedCount] = useState(0);
+  const { isPremium, setShowPaywall, setPaywallFeature } = useSubscription();
 
   const position = useRef(new Animated.ValueXY()).current;
 
@@ -45,7 +49,8 @@ export default function SwipeDeckScreen() {
     setLoading(true);
     try {
       const prefs = await getUserPreferences();
-      const fetched = await getRecipes(30);
+      // Fetch recipes with 30% community recipes mixed in
+      const fetched = await getRecipesWithCommunity(30, 0.3);
       const filtered = filterRecipesByPreferences(fetched, prefs);
       const result = filtered.length > 0 ? filtered : fetched;
       // If API failed and returned empty, use hardcoded fallback
@@ -69,12 +74,13 @@ export default function SwipeDeckScreen() {
       id: 'local-1',
       name: 'Classic Margherita Pizza',
       description: 'Fresh tomatoes, mozzarella, and basil on a crispy crust.',
-      image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800',
+      image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=1200&q=85',
       prepTime: '20 min',
       cookTime: '15 min',
       servings: 4,
       difficulty: 'Easy' as const,
       tags: ['Italian', 'Dinner'],
+      mealType: 'dinner' as const,
       ingredients: ['Pizza dough', 'San Marzano tomatoes', 'Fresh mozzarella', 'Fresh basil', 'Olive oil'],
       instructions: ['Preheat oven to 500°F', 'Roll out dough', 'Add toppings', 'Bake 12-15 min'],
       nutrition: { calories: 285, protein: 12, carbs: 36, fat: 10 }
@@ -83,12 +89,13 @@ export default function SwipeDeckScreen() {
       id: 'local-2',
       name: 'Honey Garlic Salmon',
       description: 'Glazed salmon with a sweet and savory honey garlic sauce.',
-      image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800',
+      image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=1200&q=85',
       prepTime: '10 min',
       cookTime: '20 min',
       servings: 4,
       difficulty: 'Easy' as const,
       tags: ['Seafood', 'Healthy'],
+      mealType: 'dinner' as const,
       ingredients: ['Salmon fillets', 'Honey', 'Garlic', 'Soy sauce', 'Butter'],
       instructions: ['Mix glaze', 'Sear salmon', 'Add glaze and bake'],
       nutrition: { calories: 320, protein: 34, carbs: 18, fat: 12 }
@@ -97,12 +104,13 @@ export default function SwipeDeckScreen() {
       id: 'local-3',
       name: 'Thai Green Curry',
       description: 'Creamy coconut curry with vegetables and aromatic herbs.',
-      image: 'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=800',
+      image: 'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=1200&q=85',
       prepTime: '15 min',
       cookTime: '25 min',
       servings: 4,
       difficulty: 'Medium' as const,
       tags: ['Thai', 'Curry', 'Spicy'],
+      mealType: 'dinner' as const,
       ingredients: ['Coconut milk', 'Green curry paste', 'Chicken', 'Bamboo shoots', 'Thai basil'],
       instructions: ['Sauté curry paste', 'Add coconut milk', 'Add protein and veggies', 'Simmer'],
       nutrition: { calories: 380, protein: 28, carbs: 14, fat: 24 }
@@ -111,12 +119,13 @@ export default function SwipeDeckScreen() {
       id: 'local-4',
       name: 'Mediterranean Grain Bowl',
       description: 'Hearty quinoa bowl with feta, olives, and lemon dressing.',
-      image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800',
+      image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&q=85',
       prepTime: '10 min',
       cookTime: '20 min',
       servings: 2,
       difficulty: 'Easy' as const,
       tags: ['Healthy', 'Vegetarian', 'Mediterranean'],
+      mealType: 'dinner' as const,
       ingredients: ['Quinoa', 'Cucumber', 'Cherry tomatoes', 'Feta cheese', 'Kalamata olives'],
       instructions: ['Cook quinoa', 'Chop vegetables', 'Assemble bowl', 'Drizzle with dressing'],
       nutrition: { calories: 420, protein: 14, carbs: 48, fat: 20 }
@@ -125,12 +134,13 @@ export default function SwipeDeckScreen() {
       id: 'local-5',
       name: 'Spicy Korean Fried Chicken',
       description: 'Extra crispy chicken coated in gochujang glaze.',
-      image: 'https://images.unsplash.com/photo-1575932444877-5106bee2a599?w=800',
+      image: 'https://images.unsplash.com/photo-1575932444877-5106bee2a599?w=1200&q=85',
       prepTime: '30 min',
       cookTime: '20 min',
       servings: 4,
       difficulty: 'Medium' as const,
       tags: ['Korean', 'Fried', 'Spicy'],
+      mealType: 'dinner' as const,
       ingredients: ['Chicken wings', 'Gochujang', 'Soy sauce', 'Honey', 'Sesame seeds'],
       instructions: ['Coat chicken', 'Fry until crispy', 'Toss in sauce', 'Garnish'],
       nutrition: { calories: 450, protein: 32, carbs: 24, fat: 26 }
@@ -139,12 +149,13 @@ export default function SwipeDeckScreen() {
       id: 'local-6',
       name: 'Creamy Tuscan Pasta',
       description: 'Sun-dried tomatoes and spinach in a garlic cream sauce.',
-      image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800',
+      image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=1200&q=85',
       prepTime: '10 min',
       cookTime: '20 min',
       servings: 4,
       difficulty: 'Easy' as const,
       tags: ['Italian', 'Pasta', 'Creamy'],
+      mealType: 'dinner' as const,
       ingredients: ['Penne pasta', 'Heavy cream', 'Sun-dried tomatoes', 'Spinach', 'Parmesan'],
       instructions: ['Cook pasta', 'Make cream sauce', 'Add tomatoes and spinach', 'Combine'],
       nutrition: { calories: 520, protein: 18, carbs: 56, fat: 26 }
@@ -153,12 +164,13 @@ export default function SwipeDeckScreen() {
       id: 'local-7',
       name: 'Beef Tacos',
       description: 'Seasoned ground beef with fresh toppings in corn tortillas.',
-      image: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800',
+      image: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=1200&q=85',
       prepTime: '15 min',
       cookTime: '15 min',
       servings: 4,
       difficulty: 'Easy' as const,
       tags: ['Mexican', 'Quick', 'Family'],
+      mealType: 'dinner' as const,
       ingredients: ['Ground beef', 'Taco seasoning', 'Corn tortillas', 'Lettuce', 'Cheese'],
       instructions: ['Brown beef', 'Add seasoning', 'Warm tortillas', 'Assemble tacos'],
       nutrition: { calories: 340, protein: 24, carbs: 28, fat: 16 }
@@ -167,12 +179,13 @@ export default function SwipeDeckScreen() {
       id: 'local-8',
       name: 'Lemon Herb Roasted Chicken',
       description: 'Juicy whole chicken with herbs and crispy golden skin.',
-      image: 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=800',
+      image: 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=1200&q=85',
       prepTime: '20 min',
       cookTime: '90 min',
       servings: 6,
       difficulty: 'Medium' as const,
       tags: ['Roasted', 'Classic', 'Sunday Dinner'],
+      mealType: 'dinner' as const,
       ingredients: ['Whole chicken', 'Lemon', 'Rosemary', 'Thyme', 'Garlic', 'Butter'],
       instructions: ['Season chicken', 'Stuff with lemon and herbs', 'Roast at 425°F', 'Rest before carving'],
       nutrition: { calories: 380, protein: 42, carbs: 2, fat: 22 }
@@ -212,7 +225,8 @@ export default function SwipeDeckScreen() {
   const loadMoreRecipes = async () => {
     try {
       const prefs = await getUserPreferences();
-      const more = await getRecipes(20);
+      // Fetch more recipes with 30% community recipes mixed in
+      const more = await getRecipesWithCommunity(20, 0.3);
       const filtered = filterRecipesByPreferences(more, prefs);
       setRecipes(prev => [...prev, ...filtered]);
     } catch (error) {
@@ -224,6 +238,21 @@ export default function SwipeDeckScreen() {
     const targetX = direction === 'right' ? SCREEN_WIDTH * 1.5 : -SCREEN_WIDTH * 1.5;
 
     if (direction === 'right' && current) {
+      // Check if user is at the free tier limit
+      if (!isPremium) {
+        const currentCount = await getSavedCount();
+        if (currentCount >= FREE_LIMITS.maxLikedRecipes) {
+          // Show paywall instead of saving
+          setPaywallFeature(`Save more than ${FREE_LIMITS.maxLikedRecipes} recipes`);
+          setShowPaywall(true);
+          resetCard();
+          return;
+        }
+      }
+      
+      // Track engagement for community recipes (sends notification to creator)
+      recordRecipeLike(current.id).catch(() => {}); // Fire and forget
+      
       // Save liked recipe to menu
       await saveRecipe(current);
       setLikedCount(prev => prev + 1);

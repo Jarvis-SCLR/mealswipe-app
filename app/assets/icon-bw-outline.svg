@@ -1,0 +1,21 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- White Background -->
+  <rect width="1024" height="1024" fill="#FFFFFF"/>
+  
+  <!-- Chef Hat - outline style -->
+  <g transform="translate(512, 480)">
+    <!-- Hat puffy top (cloud shape) -->
+    <ellipse cx="0" cy="-120" rx="180" ry="140" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+    
+    <!-- Hat band/base -->
+    <rect x="-160" y="-40" width="320" height="160" rx="20" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+    
+    <!-- Arrow through hat (swipe indicator) -->
+    <g transform="translate(0, 40)">
+      <!-- Arrow line -->
+      <line x1="-220" y1="0" x2="180" y2="0" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+      <!-- Arrow head -->
+      <path d="M140 -50 L220 0 L140 50" stroke="#000000" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </g>
+  </g>
+</svg>

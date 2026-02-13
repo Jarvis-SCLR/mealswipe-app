@@ -28,6 +28,16 @@
     "production": {
       "ios": {
         "resourceClass": "m-medium"
+      },
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "nikopastore@gmail.com",
+        "ascAppId": "6745386660",
+        "appleTeamId": "TJZQ3WN648"
       }
     }
   }

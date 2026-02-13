@@ -1,0 +1,53 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="100%" style="stop-color:#FF8F5C"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bg3)"/>
+  
+  <!-- Simple plate circle -->
+  <circle cx="512" cy="480" r="260" fill="#FFF"/>
+  <circle cx="512" cy="480" r="200" fill="none" stroke="#F0E8E0" stroke-width="6"/>
+  
+  <!-- Stylized food - bowl shape -->
+  <path d="M340 480 Q340 380 512 380 Q684 380 684 480 Q684 560 512 560 Q340 560 340 480Z" fill="#4CAF50"/>
+  
+  <!-- Food toppings -->
+  <ellipse cx="450" cy="450" rx="50" ry="35" fill="#FF9800"/>
+  <ellipse cx="560" cy="460" rx="45" ry="30" fill="#F44336"/>
+  <circle cx="510" cy="420" r="25" fill="#FFEB3B"/>
+  
+  <!-- Fork on left -->
+  <g transform="translate(180, 350)">
+    <rect x="30" y="0" width="12" height="50" rx="2" fill="#FFF"/>
+    <rect x="46" y="0" width="12" height="55" rx="2" fill="#FFF"/>
+    <rect x="62" y="0" width="12" height="55" rx="2" fill="#FFF"/>
+    <rect x="78" y="0" width="12" height="50" rx="2" fill="#FFF"/>
+    <rect x="38" y="50" width="48" height="20" rx="4" fill="#FFF"/>
+    <rect x="52" y="65" width="20" height="160" rx="10" fill="#FFF"/>
+  </g>
+  
+  <!-- Knife on right -->
+  <g transform="translate(720, 350)">
+    <path d="M20 0 L60 0 L60 80 L40 100 L20 80 Z" fill="#FFF"/>
+    <rect x="30" y="95" width="20" height="130" rx="10" fill="#FFF"/>
+  </g>
+  
+  <!-- Swipe gesture arrows at bottom -->
+  <g transform="translate(512, 820)">
+    <!-- Left arrow -->
+    <g opacity="0.9">
+      <circle cx="-100" cy="0" r="50" fill="#FFF" fill-opacity="0.2"/>
+      <path d="M-85 0 L-115 0 M-110 -12 L-120 0 L-110 12" stroke="#FFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <!-- Right arrow with heart -->
+    <g opacity="0.9">
+      <circle cx="100" cy="0" r="50" fill="#FFF" fill-opacity="0.2"/>
+      <path d="M115 0 L85 0 M110 -12 L120 0 L110 12" stroke="#FFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>

@@ -30,6 +30,12 @@ export default function TabsLayout() {
             case 'groceries':
               name = focused ? 'bag' : 'bag-outline';
               break;
+            case 'spin':
+              name = focused ? 'gift' : 'gift-outline';
+              break;
+            case 'creator':
+              name = focused ? 'create' : 'create-outline';
+              break;
             case 'profile':
               name = focused ? 'person' : 'person-outline';
               break;
@@ -43,9 +49,11 @@ export default function TabsLayout() {
     >
       <Tabs.Screen name="index" options={{ title: 'Discover' }} />
       <Tabs.Screen name="menu" options={{ title: 'Saved' }} />
-      <Tabs.Screen name="planner" options={{ title: 'Planner' }} />
-      <Tabs.Screen name="groceries" options={{ title: 'Groceries' }} />
-      <Tabs.Screen name="profile" options={{ title: 'Settings' }} />
+      <Tabs.Screen name="planner" options={{ title: 'Plan' }} />
+      <Tabs.Screen name="groceries" options={{ title: 'Shop' }} />
+      <Tabs.Screen name="spin" options={{ title: 'Spin' }} />
+      <Tabs.Screen name="creator" options={{ title: 'Create' }} />
+      <Tabs.Screen name="profile" options={{ title: 'Me' }} />
     </Tabs>
   );
 }

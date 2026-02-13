@@ -1,0 +1,33 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="100%" style="stop-color:#FF8F5C"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bg4)"/>
+  
+  <!-- Plate - white circle -->
+  <circle cx="512" cy="512" r="320" fill="#FFF"/>
+  <circle cx="512" cy="512" r="260" fill="none" stroke="#F5F0EB" stroke-width="8"/>
+  
+  <!-- Heart in center (representing "liked" meals) -->
+  <path d="M512 680 
+           C512 680 320 520 320 400 
+           C320 300 400 240 480 240 
+           C520 240 560 270 512 340 
+           C464 270 504 240 544 240 
+           C624 240 704 300 704 400 
+           C704 520 512 680 512 680Z" 
+        fill="#FF6B35"/>
+  
+  <!-- Small sparkle/swipe indicators -->
+  <g fill="#FFF" opacity="0.9">
+    <circle cx="680" cy="320" r="12"/>
+    <circle cx="720" cy="380" r="8"/>
+    <circle cx="344" cy="320" r="12"/>
+    <circle cx="304" cy="380" r="8"/>
+  </g>
+</svg>

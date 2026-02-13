@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MealSwipe App Store Screenshots</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8F5C 50%, #FFA06E 100%);
+            min-height: 100vh;
+            padding: 40px;
+        }
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+        .screenshots-grid {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .screenshot {
+            width: 320px;
+            height: 693px; /* iPhone 15 Pro Max ratio */
+            background: #000;
+            border-radius: 50px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .screenshot-inner {
+            width: 100%;
+            height: 100%;
+            background: #FDFBF7;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+        .screenshot-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .caption {
+            text-align: center;
+            color: #fff;
+            font-weight: 600;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        
+        /* Dynamic Island */
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 35px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 100;
+        }
+        
+        /* Screenshot 1: Swipe Screen */
+        .screen-swipe {
+            background: linear-gradient(180deg, #FDFBF7 0%, #FDF6E9 100%);
+            padding: 60px 20px 20px;
+        }
+        .swipe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .swipe-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2D2420;
+        }
+        .swipe-count {
+            font-size: 14px;
+            color: #FF6B35;
+            font-weight: 600;
+        }
+        .recipe-card {
+            background: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            height: 420px;
+        }
+        .recipe-image {
+            height: 260px;
+            background: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=85') center/cover;
+            position: relative;
+        }
+        .recipe-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #FF6B35;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .recipe-info {
+            padding: 20px;
+        }
+        .recipe-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2D2420;
+            margin-bottom: 8px;
+        }
+        .recipe-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+        .recipe-meta {
+            display: flex;
+            gap: 20px;
+        }
+        .meta-item {
+            font-size: 13px;
+            color: #888;
+        }
+        .swipe-hint {
+            display: flex;
+            justify-content: space-around;
+            padding: 30px;
+        }
+        .hint {
+            text-align: center;
+        }
+        .hint-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+        .hint-text {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        /* Screenshot 2: Saved Recipes */
+        .screen-saved {
+            background: #FDFBF7;
+            padding: 60px 16px 20px;
+        }
+        .saved-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .saved-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2D2420;
+        }
+        .saved-count {
+            font-size: 14px;
+            color: #888;
+        }
+        .folder-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        .folder-tab {
+            background: #F3F4F6;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #6B7280;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .folder-tab.active {
+            background: #FFF3ED;
+            color: #FF6B35;
+            border: 1.5px solid #FF6B35;
+            font-weight: 600;
+        }
+        .saved-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .saved-item {
+            display: flex;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .saved-thumb {
+            width: 90px;
+            height: 90px;
+            background-size: cover;
+            background-position: center;
+        }
+        .saved-info {
+            flex: 1;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .saved-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #2D2420;
+            margin-bottom: 4px;
+        }
+        .saved-meta {
+            font-size: 12px;
+            color: #888;
+        }
+        .saved-heart {
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            color: #FF6B35;
+            font-size: 22px;
+        }
+        
+        /* Screenshot 3: Meal Planning */
+        .screen-plan {
+            background: #FDFBF7;
+            padding: 60px 16px 20px;
+        }
+        .plan-header {
+            margin-bottom: 16px;
+        }
+        .plan-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2D2420;
+        }
+        .week-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            margin-bottom: 16px;
+        }
+        .week-arrow {
+            font-size: 20px;
+            color: #888;
+        }
+        .week-dates {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2D2420;
+        }
+        .day-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .day-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .day-label {
+            width: 50px;
+            text-align: center;
+        }
+        .day-name {
+            font-size: 12px;
+            color: #888;
+        }
+        .day-num {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2D2420;
+        }
+        .day-meal {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .day-meal-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+        }
+        .day-meal-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2D2420;
+        }
+        .day-meal-time {
+            font-size: 12px;
+            color: #888;
+        }
+        .day-empty {
+            flex: 1;
+            background: #F9FAFB;
+            border: 2px dashed #E5E7EB;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            font-size: 13px;
+            color: #9CA3AF;
+        }
+        
+        /* Screenshot 4: Grocery List */
+        .screen-grocery {
+            background: #FDFBF7;
+            padding: 60px 16px 20px;
+        }
+        .grocery-header {
+            margin-bottom: 8px;
+        }
+        .grocery-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2D2420;
+        }
+        .grocery-subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .grocery-section {
+            margin-bottom: 20px;
+        }
+        .grocery-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        .grocery-items {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .grocery-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid #F3F4F6;
+        }
+        .grocery-item:last-child {
+            border-bottom: none;
+        }
+        .grocery-check {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #E5E7EB;
+            border-radius: 6px;
+            margin-right: 14px;
+        }
+        .grocery-check.checked {
+            background: #FF6B35;
+            border-color: #FF6B35;
+            position: relative;
+        }
+        .grocery-check.checked::after {
+            content: '✓';
+            color: #fff;
+            font-size: 14px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .grocery-name {
+            flex: 1;
+            font-size: 15px;
+            color: #2D2420;
+        }
+        .grocery-name.crossed {
+            text-decoration: line-through;
+            color: #9CA3AF;
+        }
+        .grocery-qty {
+            font-size: 13px;
+            color: #888;
+        }
+        .export-btn {
+            background: #FF6B35;
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* Screenshot 5: Premium */
+        .screen-premium {
+            background: linear-gradient(180deg, #FF6B35 0%, #FF8F5C 100%);
+            padding: 60px 20px 20px;
+            color: #fff;
+        }
+        .premium-emoji {
+            font-size: 60px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .premium-title {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .premium-subtitle {
+            font-size: 16px;
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        .premium-features {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .premium-feature {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .premium-feature:last-child {
+            border-bottom: none;
+        }
+        .premium-feature-icon {
+            font-size: 24px;
+        }
+        .premium-feature-text {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .premium-price {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .price-main {
+            font-size: 48px;
+            font-weight: 700;
+        }
+        .price-period {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+        .price-annual {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+        .premium-btn {
+            background: #fff;
+            color: #FF6B35;
+            border: none;
+            padding: 18px;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 700;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>📱 MealSwipe App Store Screenshots</h1>
+    
+    <div class="screenshots-grid">
+        <!-- Screenshot 1: Swipe -->
+        <div>
+            <div class="screenshot">
+                <div class="screenshot-inner">
+                    <div class="dynamic-island"></div>
+                    <div class="screenshot-content screen-swipe">
+                        <div class="swipe-header">
+                            <div class="swipe-title">Discover</div>
+                            <div class="swipe-count">❤️ 12 saved</div>
+                        </div>
+                        <div class="recipe-card">
+                            <div class="recipe-image">
+                                <div class="recipe-badge">🍽️ Dinner</div>
+                            </div>
+                            <div class="recipe-info">
+                                <div class="recipe-name">Mediterranean Bowl</div>
+                                <div class="recipe-desc">Fresh quinoa with feta, olives, cucumber and lemon herb dressing</div>
+                                <div class="recipe-meta">
+                                    <span class="meta-item">⏱️ 20 min</span>
+                                    <span class="meta-item">🔥 420 cal</span>
+                                    <span class="meta-item">⭐ Easy</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swipe-hint">
+                            <div class="hint">
+                                <div class="hint-icon">👈</div>
+                                <div class="hint-text">Skip</div>
+                            </div>
+                            <div class="hint">
+                                <div class="hint-icon">👉</div>
+                                <div class="hint-text">Save</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="caption">Swipe to discover recipes</div>
+        </div>
+        
+        <!-- Screenshot 2: Saved -->
+        <div>
+            <div class="screenshot">
+                <div class="screenshot-inner">
+                    <div class="dynamic-island"></div>
+                    <div class="screenshot-content screen-saved">
+                        <div class="saved-header">
+                            <div class="saved-title">Your Menu</div>
+                            <div class="saved-count">18 saved</div>
+                        </div>
+                        <div class="folder-tabs">
+                            <div class="folder-tab active">🍽️ All 18</div>
+                            <div class="folder-tab">🍳 Breakfast 4</div>
+                            <div class="folder-tab">🥗 Lunch 5</div>
+                            <div class="folder-tab">🍝 Dinner 7</div>
+                            <div class="folder-tab">🍰 Dessert 2</div>
+                        </div>
+                        <div class="saved-list">
+                            <div class="saved-item">
+                                <div class="saved-thumb" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200')"></div>
+                                <div class="saved-info">
+                                    <div class="saved-name">Mediterranean Bowl</div>
+                                    <div class="saved-meta">⏱️ 20 min · 🔥 420 cal</div>
+                                </div>
+                                <div class="saved-heart">❤️</div>
+                            </div>
+                            <div class="saved-item">
+                                <div class="saved-thumb" style="background-image: url('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=200')"></div>
+                                <div class="saved-info">
+                                    <div class="saved-name">Blueberry Pancakes</div>
+                                    <div class="saved-meta">⏱️ 15 min · 🔥 380 cal</div>
+                                </div>
+                                <div class="saved-heart">❤️</div>
+                            </div>
+                            <div class="saved-item">
+                                <div class="saved-thumb" style="background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=200')"></div>
+                                <div class="saved-info">
+                                    <div class="saved-name">Margherita Pizza</div>
+                                    <div class="saved-meta">⏱️ 35 min · 🔥 285 cal</div>
+                                </div>
+                                <div class="saved-heart">❤️</div>
+                            </div>
+                            <div class="saved-item">
+                                <div class="saved-thumb" style="background-image: url('https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=200')"></div>
+                                <div class="saved-info">
+                                    <div class="saved-name">Honey Garlic Salmon</div>
+                                    <div class="saved-meta">⏱️ 25 min · 🔥 320 cal</div>
+                                </div>
+                                <div class="saved-heart">❤️</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="caption">Organize by meal type</div>
+        </div>
+        
+        <!-- Screenshot 3: Meal Plan -->
+        <div>
+            <div class="screenshot">
+                <div class="screenshot-inner">
+                    <div class="dynamic-island"></div>
+                    <div class="screenshot-content screen-plan">
+                        <div class="plan-header">
+                            <div class="plan-title">Meal Plan</div>
+                        </div>
+                        <div class="week-nav">
+                            <span class="week-arrow">‹</span>
+                            <span class="week-dates">Feb 10 - 16, 2026</span>
+                            <span class="week-arrow">›</span>
+                        </div>
+                        <div class="day-cards">
+                            <div class="day-card">
+                                <div class="day-label">
+                                    <div class="day-name">Mon</div>
+                                    <div class="day-num">10</div>
+                                </div>
+                                <div class="day-meal">
+                                    <div class="day-meal-img" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100')"></div>
+                                    <div>
+                                        <div class="day-meal-name">Mediterranean Bowl</div>
+                                        <div class="day-meal-time">Dinner · 20 min</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="day-card">
+                                <div class="day-label">
+                                    <div class="day-name">Tue</div>
+                                    <div class="day-num">11</div>
+                                </div>
+                                <div class="day-meal">
+                                    <div class="day-meal-img" style="background-image: url('https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=100')"></div>
+                                    <div>
+                                        <div class="day-meal-name">Honey Garlic Salmon</div>
+                                        <div class="day-meal-time">Dinner · 25 min</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="day-card">
+                                <div class="day-label">
+                                    <div class="day-name">Wed</div>
+                                    <div class="day-num">12</div>
+                                </div>
+                                <div class="day-empty">+ Tap to add meal</div>
+                            </div>
+                            <div class="day-card">
+                                <div class="day-label">
+                                    <div class="day-name">Thu</div>
+                                    <div class="day-num">13</div>
+                                </div>
+                                <div class="day-meal">
+                                    <div class="day-meal-img" style="background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=100')"></div>
+                                    <div>
+                                        <div class="day-meal-name">Margherita Pizza</div>
+                                        <div class="day-meal-time">Dinner · 35 min</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="day-card">
+                                <div class="day-label">
+                                    <div class="day-name">Fri</div>
+                                    <div class="day-num">14</div>
+                                </div>
+                                <div class="day-empty">+ Tap to add meal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="caption">Plan your week</div>
+        </div>
+        
+        <!-- Screenshot 4: Grocery -->
+        <div>
+            <div class="screenshot">
+                <div class="screenshot-inner">
+                    <div class="dynamic-island"></div>
+                    <div class="screenshot-content screen-grocery">
+                        <div class="grocery-header">
+                            <div class="grocery-title">Grocery List</div>
+                        </div>
+                        <div class="grocery-subtitle">12 items for this week's meals</div>
+                        
+                        <div class="grocery-section">
+                            <div class="grocery-section-title">🥬 Produce</div>
+                            <div class="grocery-items">
+                                <div class="grocery-item">
+                                    <div class="grocery-check checked"></div>
+                                    <span class="grocery-name crossed">Fresh basil</span>
+                                    <span class="grocery-qty">1 bunch</span>
+                                </div>
+                                <div class="grocery-item">
+                                    <div class="grocery-check"></div>
+                                    <span class="grocery-name">Cherry tomatoes</span>
+                                    <span class="grocery-qty">2 cups</span>
+                                </div>
+                                <div class="grocery-item">
+                                    <div class="grocery-check"></div>
+                                    <span class="grocery-name">Cucumber</span>
+                                    <span class="grocery-qty">2</span>
+                                </div>
+                                <div class="grocery-item">
+                                    <div class="grocery-check"></div>
+                                    <span class="grocery-name">Lemon</span>
+                                    <span class="grocery-qty">3</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grocery-section">
+                            <div class="grocery-section-title">🥩 Protein</div>
+                            <div class="grocery-items">
+                                <div class="grocery-item">
+                                    <div class="grocery-check"></div>
+                                    <span class="grocery-name">Salmon fillets</span>
+                                    <span class="grocery-qty">4 pieces</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grocery-section">
+                            <div class="grocery-section-title">🧀 Dairy</div>
+                            <div class="grocery-items">
+                                <div class="grocery-item">
+                                    <div class="grocery-check"></div>
+                                    <span class="grocery-name">Feta cheese</span>
+                                    <span class="grocery-qty">200g</span>
+                                </div>
+                                <div class="grocery-item">
+                                    <div class="grocery-check"></div>
+                                    <span class="grocery-name">Fresh mozzarella</span>
+                                    <span class="grocery-qty">2 balls</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="export-btn">📤 Export to Reminders</button>
+                    </div>
+                </div>
+            </div>
+            <div class="caption">Auto grocery lists</div>
+        </div>
+        
+        <!-- Screenshot 5: Premium -->
+        <div>
+            <div class="screenshot">
+                <div class="screenshot-inner">
+                    <div class="dynamic-island"></div>
+                    <div class="screenshot-content screen-premium">
+                        <div class="premium-emoji">✨</div>
+                        <div class="premium-title">Go Premium</div>
+                        <div class="premium-subtitle">Unlock the full MealSwipe experience</div>
+                        
+                        <div class="premium-features">
+                            <div class="premium-feature">
+                                <span class="premium-feature-icon">♾️</span>
+                                <span class="premium-feature-text">Unlimited saved recipes</span>
+                            </div>
+                            <div class="premium-feature">
+                                <span class="premium-feature-icon">👨‍👩‍👧‍👦</span>
+                                <span class="premium-feature-text">Family meal voting</span>
+                            </div>
+                            <div class="premium-feature">
+                                <span class="premium-feature-icon">🤖</span>
+                                <span class="premium-feature-text">AI meal suggestions</span>
+                            </div>
+                            <div class="premium-feature">
+                                <span class="premium-feature-icon">📊</span>
+                                <span class="premium-feature-text">Nutrition tracking</span>
+                            </div>
+                            <div class="premium-feature">
+                                <span class="premium-feature-icon">📝</span>
+                                <span class="premium-feature-text">Custom recipes</span>
+                            </div>
+                        </div>
+                        
+                        <div class="premium-price">
+                            <span class="price-main">$3.99</span>
+                            <span class="price-period">/month</span>
+                            <div class="price-annual">or $29.99/year (save 37%)</div>
+                        </div>
+                        
+                        <button class="premium-btn">Start Free Trial</button>
+                    </div>
+                </div>
+            </div>
+            <div class="caption">Premium features</div>
+        </div>
+    </div>
+</body>
+</html>

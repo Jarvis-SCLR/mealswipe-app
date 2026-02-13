@@ -1,0 +1,46 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="100%" style="stop-color:#FF8F5C"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bg5)"/>
+  
+  <!-- Hand making swipe gesture -->
+  <g transform="translate(512, 520)">
+    <!-- Palm -->
+    <ellipse cx="0" cy="80" rx="140" ry="120" fill="#FFDAB9"/>
+    
+    <!-- Thumb -->
+    <ellipse cx="-130" cy="20" rx="45" ry="70" fill="#FFDAB9" transform="rotate(-30, -130, 20)"/>
+    
+    <!-- Index finger pointing right (swiping) -->
+    <rect x="-20" y="-180" width="55" height="200" rx="27" fill="#FFDAB9" transform="rotate(15, 0, 0)"/>
+    
+    <!-- Other fingers curled -->
+    <ellipse cx="60" cy="-40" rx="30" ry="50" fill="#FFDAB9"/>
+    <ellipse cx="100" cy="-20" rx="28" ry="45" fill="#FFDAB9"/>
+    <ellipse cx="130" cy="10" rx="25" ry="40" fill="#FFDAB9"/>
+  </g>
+  
+  <!-- Swipe trail/motion lines -->
+  <g stroke="#FFF" stroke-width="12" stroke-linecap="round" opacity="0.8">
+    <path d="M280 400 Q400 380 520 400" fill="none"/>
+    <path d="M300 460 Q420 440 540 460" fill="none"/>
+    <path d="M320 520 Q440 500 560 520" fill="none"/>
+  </g>
+  
+  <!-- Small food icons floating -->
+  <g transform="translate(750, 280)">
+    <circle r="60" fill="#FFF" opacity="0.9"/>
+    <text x="0" y="20" text-anchor="middle" font-size="70">🍕</text>
+  </g>
+  
+  <g transform="translate(200, 250)">
+    <circle r="50" fill="#FFF" opacity="0.9"/>
+    <text x="0" y="18" text-anchor="middle" font-size="55">🍜</text>
+  </g>
+</svg>

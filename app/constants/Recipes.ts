@@ -1,3 +1,5 @@
+export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert' | 'drink';
+
 export type Recipe = {
   id: string;
   name: string;
@@ -6,9 +8,21 @@ export type Recipe = {
   prepTime: number;
   calories: number;
   rating: number;
+  mealType: MealType;
   tags: string[];
   appliances: string[];
 };
+
+// Helper to auto-detect meal type from tags
+function detectMealType(tags: string[]): MealType {
+  const lowerTags = tags.map(t => t.toLowerCase());
+  if (lowerTags.some(t => ['breakfast', 'brunch', 'morning'].includes(t))) return 'breakfast';
+  if (lowerTags.some(t => ['lunch', 'sandwich', 'salad', 'wrap'].includes(t))) return 'lunch';
+  if (lowerTags.some(t => ['dessert', 'sweet', 'cake', 'cookie', 'baking'].includes(t))) return 'dessert';
+  if (lowerTags.some(t => ['snack', 'appetizer', 'dip', 'finger food'].includes(t))) return 'snack';
+  if (lowerTags.some(t => ['smoothie', 'drink', 'beverage', 'cocktail'].includes(t))) return 'drink';
+  return 'dinner'; // default
+}
 
 export const RECIPES: Recipe[] = [
   // ==================== BREAKFAST ====================
@@ -21,6 +35,7 @@ export const RECIPES: Recipe[] = [
     calories: 540,
     rating: 4.7,
     tags: ['Breakfast', 'Brunch', 'Classic'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -32,6 +47,7 @@ export const RECIPES: Recipe[] = [
     calories: 450,
     rating: 4.8,
     tags: ['Breakfast', 'Sweet', 'Weekend'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -43,6 +59,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Breakfast', 'Healthy', 'Quick'],
+    mealType: 'breakfast',
     appliances: ['toaster-oven', 'stovetop'],
   },
   {
@@ -54,6 +71,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.6,
     tags: ['Breakfast', 'Healthy', 'Vegan'],
+    mealType: 'breakfast',
     appliances: ['blender'],
   },
   {
@@ -65,6 +83,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Breakfast', 'Sweet', 'Comfort'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -76,6 +95,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.4,
     tags: ['Breakfast', 'Healthy', 'Vegetarian'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -87,6 +107,7 @@ export const RECIPES: Recipe[] = [
     calories: 350,
     rating: 4.3,
     tags: ['Breakfast', 'Meal Prep', 'Healthy'],
+    mealType: 'breakfast',
     appliances: [],
   },
   {
@@ -98,6 +119,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.6,
     tags: ['Breakfast', 'Mexican', 'Filling'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -109,6 +131,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.4,
     tags: ['Breakfast', 'Healthy', 'Vegan'],
+    mealType: 'breakfast',
     appliances: ['blender'],
   },
   {
@@ -120,6 +143,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.7,
     tags: ['Breakfast', 'Sweet', 'Weekend'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -131,6 +155,7 @@ export const RECIPES: Recipe[] = [
     calories: 340,
     rating: 4.6,
     tags: ['Breakfast', 'Mediterranean', 'Vegetarian'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -142,6 +167,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.3,
     tags: ['Breakfast', 'Quick', 'Healthy'],
+    mealType: 'breakfast',
     appliances: [],
   },
   {
@@ -153,6 +179,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.5,
     tags: ['Breakfast', 'Comfort', 'Filling'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -164,6 +191,7 @@ export const RECIPES: Recipe[] = [
     calories: 450,
     rating: 4.4,
     tags: ['Breakfast', 'French', 'Quick'],
+    mealType: 'breakfast',
     appliances: ['toaster-oven'],
   },
   {
@@ -175,6 +203,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Breakfast', 'Mexican', 'Comfort'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
 
@@ -188,6 +217,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Lunch', 'Salad', 'Classic'],
+    mealType: 'lunch',
     appliances: [],
   },
   {
@@ -199,6 +229,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.4,
     tags: ['Lunch', 'Quick', 'Healthy'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
   {
@@ -210,6 +241,7 @@ export const RECIPES: Recipe[] = [
     calories: 450,
     rating: 4.6,
     tags: ['Lunch', 'Vegan', 'Healthy'],
+    mealType: 'lunch',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -221,6 +253,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.7,
     tags: ['Lunch', 'Comfort', 'Classic'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
   {
@@ -232,6 +265,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Lunch', 'Italian', 'Vegetarian'],
+    mealType: 'lunch',
     appliances: [],
   },
   {
@@ -243,6 +277,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Lunch', 'Japanese', 'Healthy'],
+    mealType: 'lunch',
     appliances: ['rice-cooker'],
   },
   {
@@ -254,6 +289,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.5,
     tags: ['Lunch', 'Classic', 'Filling'],
+    mealType: 'lunch',
     appliances: ['toaster-oven'],
   },
   {
@@ -265,6 +301,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.6,
     tags: ['Lunch', 'Mediterranean', 'Vegetarian'],
+    mealType: 'lunch',
     appliances: [],
   },
   {
@@ -276,6 +313,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.6,
     tags: ['Lunch', 'Salad', 'High Protein'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
   {
@@ -287,6 +325,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.8,
     tags: ['Lunch', 'Japanese', 'Comfort'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
   {
@@ -298,6 +337,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.4,
     tags: ['Lunch', 'Classic', 'Quick'],
+    mealType: 'lunch',
     appliances: ['stovetop', 'toaster-oven'],
   },
   {
@@ -309,6 +349,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.6,
     tags: ['Lunch', 'Comfort', 'Soup'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
   {
@@ -320,6 +361,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.4,
     tags: ['Lunch', 'Mediterranean', 'Healthy'],
+    mealType: 'lunch',
     appliances: [],
   },
   {
@@ -331,6 +373,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Lunch', 'Vietnamese', 'Sandwich'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
   {
@@ -342,6 +385,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Lunch', 'Healthy', 'Vegetarian'],
+    mealType: 'lunch',
     appliances: ['stovetop', 'oven'],
   },
 
@@ -355,6 +399,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.8,
     tags: ['Dinner', 'Classic', 'Sunday Roast'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -366,6 +411,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.7,
     tags: ['Dinner', 'Italian', 'Comfort'],
+    mealType: 'dinner',
     appliances: ['stovetop', 'oven'],
   },
   {
@@ -377,6 +423,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Dinner', 'Asian', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -388,6 +435,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.8,
     tags: ['Dinner', 'Indian', 'Curry'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -399,6 +447,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Dinner', 'Mexican', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -410,6 +459,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Dinner', 'Game Day', 'Air Fryer'],
+    mealType: 'dinner',
     appliances: ['air-fryer'],
   },
   {
@@ -421,6 +471,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Dinner', 'Thai', 'Curry'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -432,6 +483,7 @@ export const RECIPES: Recipe[] = [
     calories: 540,
     rating: 4.8,
     tags: ['Dinner', 'Indian', 'Popular'],
+    mealType: 'dinner',
     appliances: ['stovetop', 'oven'],
   },
   {
@@ -443,6 +495,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Dinner', 'Healthy', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -454,6 +507,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Dinner', 'Easy', 'One Pot'],
+    mealType: 'dinner',
     appliances: ['instant-pot'],
   },
 
@@ -467,6 +521,7 @@ export const RECIPES: Recipe[] = [
     calories: 680,
     rating: 4.9,
     tags: ['Dinner', 'Steak', 'Grilling'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -478,6 +533,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Dinner', 'Mexican', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -489,6 +545,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.7,
     tags: ['Dinner', 'Comfort', 'One Pot'],
+    mealType: 'dinner',
     appliances: ['instant-pot'],
   },
   {
@@ -500,6 +557,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.7,
     tags: ['Dinner', 'Korean', 'BBQ'],
+    mealType: 'dinner',
     appliances: ['grill', 'stovetop'],
   },
   {
@@ -511,6 +569,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.6,
     tags: ['Dinner', 'Italian', 'Pasta'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -522,6 +581,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.8,
     tags: ['Dinner', 'Comfort', 'Slow Cooker'],
+    mealType: 'dinner',
     appliances: ['slow-cooker'],
   },
   {
@@ -533,6 +593,7 @@ export const RECIPES: Recipe[] = [
     calories: 620,
     rating: 4.6,
     tags: ['Dinner', 'Mexican', 'Bowl'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -544,6 +605,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.6,
     tags: ['Dinner', 'American', 'Sandwich'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
   {
@@ -555,6 +617,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.6,
     tags: ['Dinner', 'Russian', 'Comfort'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -566,6 +629,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.5,
     tags: ['Dinner', 'American', 'Comfort'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
 
@@ -579,6 +643,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.7,
     tags: ['Dinner', 'Seafood', 'Healthy'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -590,6 +655,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Dinner', 'Italian', 'Seafood'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -601,6 +667,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.6,
     tags: ['Dinner', 'Mexican', 'Seafood'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -612,6 +679,7 @@ export const RECIPES: Recipe[] = [
     calories: 510,
     rating: 4.7,
     tags: ['Dinner', 'Thai', 'Noodles'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -623,6 +691,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.6,
     tags: ['Dinner', 'Seafood', 'Grilling'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -634,6 +703,7 @@ export const RECIPES: Recipe[] = [
     calories: 680,
     rating: 4.8,
     tags: ['Dinner', 'Seafood', 'Indulgent'],
+    mealType: 'dinner',
     appliances: ['stovetop', 'oven'],
   },
   {
@@ -645,6 +715,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.6,
     tags: ['Dinner', 'Japanese', 'Healthy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -656,6 +727,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.7,
     tags: ['Dinner', 'Cajun', 'Healthy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -667,6 +739,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Dinner', 'Thai', 'Curry'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -678,6 +751,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.7,
     tags: ['Dinner', 'Cajun', 'Seafood'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
 
@@ -691,6 +765,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.8,
     tags: ['Dinner', 'Italian', 'Pasta'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -702,6 +777,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.7,
     tags: ['Dinner', 'Italian', 'Vegetarian'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -713,6 +789,7 @@ export const RECIPES: Recipe[] = [
     calories: 620,
     rating: 4.6,
     tags: ['Dinner', 'Italian', 'Comfort'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -724,6 +801,7 @@ export const RECIPES: Recipe[] = [
     calories: 680,
     rating: 4.8,
     tags: ['Dinner', 'Italian', 'Comfort'],
+    mealType: 'dinner',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -735,6 +813,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Dinner', 'Italian', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -746,6 +825,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.5,
     tags: ['Dinner', 'Italian', 'Spicy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -757,6 +837,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Dinner', 'Italian', 'Vegetarian'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -768,6 +849,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.6,
     tags: ['Dinner', 'Italian', 'Comfort'],
+    mealType: 'dinner',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -779,6 +861,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Dinner', 'Italian', 'Seafood'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -790,6 +873,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.5,
     tags: ['Dinner', 'Italian', 'Pasta'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
 
@@ -803,6 +887,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.9,
     tags: ['Dinner', 'Italian', 'Pizza'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -814,6 +899,7 @@ export const RECIPES: Recipe[] = [
     calories: 540,
     rating: 4.8,
     tags: ['Dinner', 'Italian', 'Pizza'],
+    mealType: 'dinner',
     appliances: ['pizza-oven'],
   },
   {
@@ -825,6 +911,7 @@ export const RECIPES: Recipe[] = [
     calories: 620,
     rating: 4.7,
     tags: ['Dinner', 'American', 'Pizza'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -836,6 +923,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.6,
     tags: ['Dinner', 'American', 'Pizza'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -847,6 +935,7 @@ export const RECIPES: Recipe[] = [
     calories: 540,
     rating: 4.5,
     tags: ['Dinner', 'Italian', 'Vegetarian'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
 
@@ -860,6 +949,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.4,
     tags: ['Dinner', 'Asian', 'Vegan'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -871,6 +961,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Dinner', 'Italian', 'Vegetarian'],
+    mealType: 'dinner',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -882,6 +973,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Dinner', 'Mexican', 'Vegan'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -893,6 +985,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.5,
     tags: ['Dinner', 'Healthy', 'Vegetarian'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -904,6 +997,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.6,
     tags: ['Dinner', 'Indian', 'Vegetarian'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -915,6 +1009,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Dinner', 'Mediterranean', 'Vegan'],
+    mealType: 'dinner',
     appliances: ['stovetop', 'air-fryer'],
   },
   {
@@ -926,6 +1021,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.5,
     tags: ['Dinner', 'Thai', 'Vegan'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -937,6 +1033,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.5,
     tags: ['Dinner', 'Indian', 'Vegan'],
+    mealType: 'dinner',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -948,6 +1045,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.4,
     tags: ['Dinner', 'Vegetarian', 'Grilling'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -959,6 +1057,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.6,
     tags: ['Dinner', 'Indian', 'Vegan'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
 
@@ -972,6 +1071,7 @@ export const RECIPES: Recipe[] = [
     calories: 450,
     rating: 4.8,
     tags: ['Dinner', 'BBQ', 'Slow Cooker'],
+    mealType: 'dinner',
     appliances: ['slow-cooker'],
   },
   {
@@ -983,6 +1083,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Dinner', 'Classic', 'Fall'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -994,6 +1095,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.7,
     tags: ['Dinner', 'Japanese', 'Comfort'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1005,6 +1107,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Dinner', 'Mexican', 'Slow Cook'],
+    mealType: 'dinner',
     appliances: ['slow-cooker', 'stovetop'],
   },
   {
@@ -1016,6 +1119,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.6,
     tags: ['Dinner', 'Chinese', 'BBQ'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
 
@@ -1029,6 +1133,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.6,
     tags: ['Side', 'Comfort', 'Classic'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1040,6 +1145,7 @@ export const RECIPES: Recipe[] = [
     calories: 210,
     rating: 4.3,
     tags: ['Side', 'Asian', 'Basic'],
+    mealType: 'dinner',
     appliances: ['rice-cooker'],
   },
   {
@@ -1051,6 +1157,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.5,
     tags: ['Side', 'Healthy', 'Roasted'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -1062,6 +1169,7 @@ export const RECIPES: Recipe[] = [
     calories: 220,
     rating: 4.6,
     tags: ['Side', 'Air Fryer', 'Quick'],
+    mealType: 'dinner',
     appliances: ['air-fryer'],
   },
   {
@@ -1073,6 +1181,7 @@ export const RECIPES: Recipe[] = [
     calories: 150,
     rating: 4.2,
     tags: ['Side', 'BBQ', 'No Cook'],
+    mealType: 'dinner',
     appliances: [],
   },
   {
@@ -1084,6 +1193,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.5,
     tags: ['Side', 'Summer', 'Grilling'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -1095,6 +1205,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Side', 'Comfort', 'Classic'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1106,6 +1217,7 @@ export const RECIPES: Recipe[] = [
     calories: 80,
     rating: 4.3,
     tags: ['Side', 'Healthy', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1117,6 +1229,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.4,
     tags: ['Side', 'Healthy', 'Vegetarian'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -1128,6 +1241,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.5,
     tags: ['Side', 'Asian', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
 
@@ -1141,6 +1255,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.8,
     tags: ['Dessert', 'Italian', 'No Bake'],
+    mealType: 'dessert',
     appliances: [],
   },
   {
@@ -1152,6 +1267,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.9,
     tags: ['Dessert', 'Chocolate', 'Indulgent'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1163,6 +1279,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.7,
     tags: ['Dessert', 'Classic', 'Baking'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1174,6 +1291,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.7,
     tags: ['Dessert', 'American', 'Fall'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1185,6 +1303,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.8,
     tags: ['Dessert', 'French', 'Elegant'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1196,6 +1315,7 @@ export const RECIPES: Recipe[] = [
     calories: 220,
     rating: 4.6,
     tags: ['Dessert', 'Cookies', 'Classic'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1207,6 +1327,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.6,
     tags: ['Dessert', 'Italian', 'Elegant'],
+    mealType: 'dessert',
     appliances: ['stovetop'],
   },
   {
@@ -1218,6 +1339,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.6,
     tags: ['Dessert', 'Chocolate', 'Baking'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1229,6 +1351,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.4,
     tags: ['Dessert', 'Ice Cream', 'No Bake'],
+    mealType: 'dessert',
     appliances: [],
   },
   {
@@ -1240,6 +1363,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.7,
     tags: ['Dessert', 'Mexican', 'Fried'],
+    mealType: 'dessert',
     appliances: ['stovetop'],
   },
   {
@@ -1251,6 +1375,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.5,
     tags: ['Dessert', 'Japanese', 'Ice Cream'],
+    mealType: 'dessert',
     appliances: ['microwave'],
   },
   {
@@ -1262,6 +1387,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.5,
     tags: ['Dessert', 'Baking', 'Citrus'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1273,6 +1399,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.6,
     tags: ['Dessert', 'Southern', 'Summer'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1284,6 +1411,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.7,
     tags: ['Dessert', 'Mexican', 'Classic'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1295,6 +1423,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.6,
     tags: ['Dessert', 'French', 'Chocolate'],
+    mealType: 'dessert',
     appliances: ['stovetop'],
   },
 
@@ -1308,6 +1437,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.7,
     tags: ['Appetizer', 'Mexican', 'Vegan'],
+    mealType: 'snack',
     appliances: [],
   },
   {
@@ -1319,6 +1449,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.5,
     tags: ['Appetizer', 'Italian', 'Vegetarian'],
+    mealType: 'snack',
     appliances: ['toaster-oven'],
   },
   {
@@ -1330,6 +1461,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.6,
     tags: ['Appetizer', 'Party', 'Vegetarian'],
+    mealType: 'snack',
     appliances: ['oven'],
   },
   {
@@ -1341,6 +1473,7 @@ export const RECIPES: Recipe[] = [
     calories: 140,
     rating: 4.4,
     tags: ['Appetizer', 'Classic', 'Party'],
+    mealType: 'snack',
     appliances: ['stovetop'],
   },
   {
@@ -1352,6 +1485,7 @@ export const RECIPES: Recipe[] = [
     calories: 120,
     rating: 4.5,
     tags: ['Appetizer', 'Italian', 'No Cook'],
+    mealType: 'snack',
     appliances: [],
   },
   {
@@ -1363,6 +1497,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.5,
     tags: ['Appetizer', 'Party', 'Vegetarian'],
+    mealType: 'snack',
     appliances: ['oven'],
   },
   {
@@ -1374,6 +1509,7 @@ export const RECIPES: Recipe[] = [
     calories: 140,
     rating: 4.5,
     tags: ['Appetizer', 'Vietnamese', 'Healthy'],
+    mealType: 'snack',
     appliances: [],
   },
   {
@@ -1385,6 +1521,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.5,
     tags: ['Appetizer', 'Fried', 'Party'],
+    mealType: 'snack',
     appliances: ['air-fryer'],
   },
   {
@@ -1396,6 +1533,7 @@ export const RECIPES: Recipe[] = [
     calories: 220,
     rating: 4.6,
     tags: ['Appetizer', 'Mediterranean', 'Vegan'],
+    mealType: 'snack',
     appliances: ['blender'],
   },
   {
@@ -1407,6 +1545,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.6,
     tags: ['Appetizer', 'Mexican', 'Party'],
+    mealType: 'snack',
     appliances: ['oven'],
   },
   {
@@ -1418,6 +1557,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.5,
     tags: ['Appetizer', 'Seafood', 'Fried'],
+    mealType: 'snack',
     appliances: ['air-fryer'],
   },
   {
@@ -1429,6 +1569,7 @@ export const RECIPES: Recipe[] = [
     calories: 120,
     rating: 4.3,
     tags: ['Appetizer', 'Japanese', 'Healthy'],
+    mealType: 'snack',
     appliances: ['microwave'],
   },
   {
@@ -1440,6 +1581,7 @@ export const RECIPES: Recipe[] = [
     calories: 220,
     rating: 4.7,
     tags: ['Appetizer', 'Party', 'Sweet-Savory'],
+    mealType: 'dessert',
     appliances: ['oven'],
   },
   {
@@ -1451,6 +1593,7 @@ export const RECIPES: Recipe[] = [
     calories: 220,
     rating: 4.6,
     tags: ['Appetizer', 'Japanese', 'Dumplings'],
+    mealType: 'snack',
     appliances: ['stovetop'],
   },
   {
@@ -1462,6 +1605,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.6,
     tags: ['Appetizer', 'Party', 'No Cook'],
+    mealType: 'snack',
     appliances: [],
   },
 
@@ -1475,6 +1619,7 @@ export const RECIPES: Recipe[] = [
     calories: 220,
     rating: 4.5,
     tags: ['Drink', 'Smoothie', 'Healthy'],
+    mealType: 'drink',
     appliances: ['blender'],
   },
   {
@@ -1486,6 +1631,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.4,
     tags: ['Drink', 'Protein', 'Post-Workout'],
+    mealType: 'drink',
     appliances: ['blender'],
   },
   {
@@ -1497,6 +1643,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.5,
     tags: ['Drink', 'Coffee', 'Japanese'],
+    mealType: 'drink',
     appliances: ['blender'],
   },
   {
@@ -1508,6 +1655,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.6,
     tags: ['Drink', 'Cocktail', 'Tropical'],
+    mealType: 'drink',
     appliances: ['blender'],
   },
   {
@@ -1519,6 +1667,7 @@ export const RECIPES: Recipe[] = [
     calories: 120,
     rating: 4.4,
     tags: ['Drink', 'Summer', 'Refreshing'],
+    mealType: 'drink',
     appliances: [],
   },
   {
@@ -1530,6 +1679,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.6,
     tags: ['Drink', 'Winter', 'Chocolate'],
+    mealType: 'drink',
     appliances: ['stovetop'],
   },
   {
@@ -1541,6 +1691,7 @@ export const RECIPES: Recipe[] = [
     calories: 240,
     rating: 4.6,
     tags: ['Drink', 'Smoothie', 'Breakfast'],
+    mealType: 'breakfast',
     appliances: ['blender'],
   },
   {
@@ -1552,6 +1703,7 @@ export const RECIPES: Recipe[] = [
     calories: 120,
     rating: 4.4,
     tags: ['Drink', 'Healthy', 'Anti-inflammatory'],
+    mealType: 'drink',
     appliances: ['stovetop'],
   },
   {
@@ -1563,6 +1715,7 @@ export const RECIPES: Recipe[] = [
     calories: 220,
     rating: 4.6,
     tags: ['Drink', 'Cocktail', 'Mexican'],
+    mealType: 'drink',
     appliances: ['blender'],
   },
   {
@@ -1574,6 +1727,7 @@ export const RECIPES: Recipe[] = [
     calories: 5,
     rating: 4.5,
     tags: ['Drink', 'Coffee', 'No Cook'],
+    mealType: 'drink',
     appliances: [],
   },
 
@@ -1587,6 +1741,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.7,
     tags: ['Dinner', 'Korean', 'Bowl'],
+    mealType: 'dinner',
     appliances: ['stovetop', 'rice-cooker'],
   },
   {
@@ -1598,6 +1753,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.8,
     tags: ['Dinner', 'Vietnamese', 'Soup'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
   {
@@ -1609,6 +1765,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.8,
     tags: ['Dinner', 'Mexican', 'Street Food'],
+    mealType: 'dinner',
     appliances: ['grill', 'stovetop'],
   },
   {
@@ -1620,6 +1777,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.6,
     tags: ['Dinner', 'Greek', 'Mediterranean'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -1631,6 +1789,7 @@ export const RECIPES: Recipe[] = [
     calories: 620,
     rating: 4.8,
     tags: ['Dinner', 'Spanish', 'Seafood'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1642,6 +1801,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.8,
     tags: ['Dinner', 'Indian', 'Rice'],
+    mealType: 'dinner',
     appliances: ['stovetop', 'oven'],
   },
   {
@@ -1653,6 +1813,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.7,
     tags: ['Dinner', 'Caribbean', 'Spicy'],
+    mealType: 'dinner',
     appliances: ['grill', 'oven'],
   },
   {
@@ -1664,6 +1825,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.6,
     tags: ['Dinner', 'Chinese', 'Spicy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1675,6 +1837,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.6,
     tags: ['Dinner', 'Greek', 'Comfort'],
+    mealType: 'dinner',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -1686,6 +1849,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.7,
     tags: ['Dinner', 'Middle Eastern', 'Street Food'],
+    mealType: 'dinner',
     appliances: ['grill', 'stovetop'],
   },
 
@@ -1699,6 +1863,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.4,
     tags: ['Quick', 'Mexican', 'Easy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1710,6 +1875,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Quick', 'Asian', 'Easy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1721,6 +1887,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.4,
     tags: ['Quick', 'Lunch', 'Sandwich'],
+    mealType: 'lunch',
     appliances: ['toaster-oven'],
   },
   {
@@ -1732,6 +1899,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.3,
     tags: ['Quick', 'Budget', 'Easy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1743,6 +1911,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.2,
     tags: ['Quick', 'Dessert', 'Easy'],
+    mealType: 'dessert',
     appliances: ['microwave'],
   },
   {
@@ -1754,6 +1923,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.5,
     tags: ['Quick', 'Italian', 'No Cook'],
+    mealType: 'dinner',
     appliances: [],
   },
   {
@@ -1765,6 +1935,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.2,
     tags: ['Quick', 'Classic', 'Kids'],
+    mealType: 'dinner',
     appliances: [],
   },
   {
@@ -1776,6 +1947,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.4,
     tags: ['Quick', 'Breakfast', 'Easy'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -1787,6 +1959,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.3,
     tags: ['Snack', 'Quick', 'Movie Night'],
+    mealType: 'snack',
     appliances: ['microwave'],
   },
   {
@@ -1798,6 +1971,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.3,
     tags: ['Quick', 'Lunch', 'Easy'],
+    mealType: 'lunch',
     appliances: [],
   },
 
@@ -1811,6 +1985,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Healthy', 'Salad', 'High Protein'],
+    mealType: 'lunch',
     appliances: ['grill'],
   },
   {
@@ -1822,6 +1997,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.3,
     tags: ['Healthy', 'Low Carb', 'Vegetarian'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1833,6 +2009,7 @@ export const RECIPES: Recipe[] = [
     calories: 220,
     rating: 4.5,
     tags: ['Healthy', 'Seafood', 'Light'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -1844,6 +2021,7 @@ export const RECIPES: Recipe[] = [
     calories: 80,
     rating: 4.2,
     tags: ['Healthy', 'Low Carb', 'Keto'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1855,6 +2033,7 @@ export const RECIPES: Recipe[] = [
     calories: 120,
     rating: 4.2,
     tags: ['Healthy', 'Vegan', 'Side'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1866,6 +2045,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.4,
     tags: ['Healthy', 'Low Carb', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1877,6 +2057,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.7,
     tags: ['Healthy', 'Japanese', 'Bowl'],
+    mealType: 'dinner',
     appliances: ['rice-cooker'],
   },
   {
@@ -1888,6 +2069,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.5,
     tags: ['Healthy', 'Japanese', 'Vegan'],
+    mealType: 'dinner',
     appliances: ['rice-cooker'],
   },
   {
@@ -1899,6 +2081,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.6,
     tags: ['Healthy', 'Mexican', 'No Cook'],
+    mealType: 'dinner',
     appliances: [],
   },
   {
@@ -1910,6 +2093,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.3,
     tags: ['Healthy', 'Breakfast', 'High Protein'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
 
@@ -1923,6 +2107,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.7,
     tags: ['Comfort', 'Classic', 'Dinner'],
+    mealType: 'dinner',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -1934,6 +2119,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.6,
     tags: ['Comfort', 'British', 'Dinner'],
+    mealType: 'dinner',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -1945,6 +2131,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.5,
     tags: ['Comfort', 'Side', 'Vegetarian'],
+    mealType: 'dinner',
     appliances: ['oven'],
   },
   {
@@ -1956,6 +2143,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.4,
     tags: ['Comfort', 'American', 'Family'],
+    mealType: 'dinner',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -1967,6 +2155,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Comfort', 'American', 'Spicy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -1978,6 +2167,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.7,
     tags: ['Comfort', 'French', 'Soup'],
+    mealType: 'lunch',
     appliances: ['stovetop', 'oven'],
   },
   {
@@ -1989,6 +2179,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.5,
     tags: ['Comfort', 'Southern', 'Breakfast'],
+    mealType: 'breakfast',
     appliances: ['oven', 'stovetop'],
   },
   {
@@ -2000,6 +2191,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.4,
     tags: ['Comfort', 'American', 'Family'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -2011,6 +2203,7 @@ export const RECIPES: Recipe[] = [
     calories: 680,
     rating: 4.5,
     tags: ['Comfort', 'Southern', 'Dinner'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -2022,6 +2215,7 @@ export const RECIPES: Recipe[] = [
     calories: 350,
     rating: 4.3,
     tags: ['Comfort', 'American', 'Quick'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
 
@@ -2035,6 +2229,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.7,
     tags: ['Dinner', 'American', 'Grilling'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -2046,6 +2241,7 @@ export const RECIPES: Recipe[] = [
     calories: 720,
     rating: 4.7,
     tags: ['Dinner', 'American', 'Indulgent'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -2057,6 +2253,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.4,
     tags: ['Dinner', 'Healthy', 'Grilling'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -2068,6 +2265,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.4,
     tags: ['Dinner', 'Vegetarian', 'Grilling'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -2079,6 +2277,7 @@ export const RECIPES: Recipe[] = [
     calories: 620,
     rating: 4.8,
     tags: ['Dinner', 'American', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
 
@@ -2092,6 +2291,7 @@ export const RECIPES: Recipe[] = [
     calories: 520,
     rating: 4.6,
     tags: ['Dinner', 'Chinese', 'Popular'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -2103,6 +2303,7 @@ export const RECIPES: Recipe[] = [
     calories: 540,
     rating: 4.6,
     tags: ['Dinner', 'Chinese', 'Sweet'],
+    mealType: 'dessert',
     appliances: ['stovetop'],
   },
   {
@@ -2114,6 +2315,7 @@ export const RECIPES: Recipe[] = [
     calories: 380,
     rating: 4.5,
     tags: ['Dinner', 'Chinese', 'Quick'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -2125,6 +2327,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.5,
     tags: ['Dinner', 'Japanese', 'Easy'],
+    mealType: 'dinner',
     appliances: ['stovetop', 'grill'],
   },
   {
@@ -2136,6 +2339,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.6,
     tags: ['Appetizer', 'Chinese', 'Dumplings'],
+    mealType: 'snack',
     appliances: ['stovetop'],
   },
   {
@@ -2147,6 +2351,7 @@ export const RECIPES: Recipe[] = [
     calories: 80,
     rating: 4.4,
     tags: ['Soup', 'Japanese', 'Light'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
   {
@@ -2158,6 +2363,7 @@ export const RECIPES: Recipe[] = [
     calories: 620,
     rating: 4.7,
     tags: ['Dinner', 'Japanese', 'Comfort'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -2169,6 +2375,7 @@ export const RECIPES: Recipe[] = [
     calories: 480,
     rating: 4.6,
     tags: ['Dinner', 'Chinese', 'Spicy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -2180,6 +2387,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.5,
     tags: ['Dinner', 'Chinese', 'Spicy'],
+    mealType: 'dinner',
     appliances: ['stovetop'],
   },
   {
@@ -2191,6 +2399,7 @@ export const RECIPES: Recipe[] = [
     calories: 180,
     rating: 4.6,
     tags: ['Soup', 'Thai', 'Spicy'],
+    mealType: 'lunch',
     appliances: ['stovetop'],
   },
 
@@ -2204,6 +2413,7 @@ export const RECIPES: Recipe[] = [
     calories: 320,
     rating: 4.5,
     tags: ['Breakfast', 'Italian', 'Spicy'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -2215,6 +2425,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.3,
     tags: ['Breakfast', 'Healthy', 'No Cook'],
+    mealType: 'breakfast',
     appliances: [],
   },
   {
@@ -2226,6 +2437,7 @@ export const RECIPES: Recipe[] = [
     calories: 580,
     rating: 4.7,
     tags: ['Breakfast', 'Indulgent', 'Brunch'],
+    mealType: 'breakfast',
     appliances: ['stovetop'],
   },
   {
@@ -2237,6 +2449,7 @@ export const RECIPES: Recipe[] = [
     calories: 280,
     rating: 4.7,
     tags: ['Side', 'Mexican', 'Grilling'],
+    mealType: 'dinner',
     appliances: ['grill'],
   },
   {
@@ -2248,6 +2461,7 @@ export const RECIPES: Recipe[] = [
     calories: 420,
     rating: 4.8,
     tags: ['Breakfast', 'Baking', 'Sweet'],
+    mealType: 'breakfast',
     appliances: ['oven'],
   },
 ];

@@ -33,9 +33,14 @@ function ApplianceIcon({ appliance }: { appliance: string }) {
   return <Ionicons name={data.icon as any} size={14} color={Colors.espresso} />;
 }
 
-export function RecipeCard({ recipe }: { recipe: Recipe }) {
+// Extended recipe type that may include community flag
+type ExtendedRecipe = Recipe & { isCommunity?: boolean; creatorId?: string };
+
+export function RecipeCard({ recipe }: { recipe: ExtendedRecipe }) {
   const primaryAppliance = recipe.appliances?.[0];
   const applianceData = primaryAppliance ? APPLIANCE_DATA[primaryAppliance] : null;
+  const isCommunity = (recipe as ExtendedRecipe).isCommunity;
+  
   return (
     <View style={styles.card}>
       <View style={styles.imageWrap}>
@@ -45,6 +50,14 @@ export function RecipeCard({ recipe }: { recipe: Recipe }) {
           locations={[0, 0.58, 1]}
           style={styles.gradient}
         />
+
+        {/* Community Recipe Badge */}
+        {isCommunity && (
+          <View style={styles.communityBadge}>
+            <Ionicons name="people" size={12} color="#fff" />
+            <Text style={styles.communityLabel}>Community</Text>
+          </View>
+        )}
 
         {primaryAppliance && applianceData && (
           <View style={styles.applianceBadge}>
@@ -106,6 +119,29 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     height: '40%',
+  },
+  communityBadge: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.cielo,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 20,
+    gap: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  communityLabel: {
+    fontFamily: 'DM Sans Medium',
+    fontSize: 11,
+    color: '#fff',
+    fontWeight: '600',
   },
   applianceBadge: {
     position: 'absolute',
