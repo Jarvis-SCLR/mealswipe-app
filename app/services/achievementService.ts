@@ -171,25 +171,6 @@ export const ACHIEVEMENTS: Achievement[] = [
     progressKey: 'max_streak',
   },
   
-  // Special achievements
-  {
-    id: 'daily_spin',
-    name: 'Lucky Spinner',
-    description: 'Spin the wheel 7 times',
-    emoji: '🎰',
-    category: 'special',
-    requirement: 7,
-    progressKey: 'total_spins',
-  },
-  {
-    id: 'spin_win',
-    name: 'Jackpot',
-    description: 'Win a premium reward from spin',
-    emoji: '🎁',
-    category: 'special',
-    requirement: 1,
-    progressKey: 'premium_wins',
-  },
 ];
 
 interface AchievementProgress {

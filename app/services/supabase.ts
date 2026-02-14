@@ -125,16 +125,6 @@ export interface Database {
           streak_protectors: number;
         };
       };
-      daily_spins: {
-        Row: {
-          id: string;
-          user_id: string;
-          spin_date: string;
-          reward_type: string;
-          reward_value: string | null;
-          created_at: string;
-        };
-      };
       user_achievements: {
         Row: {
           id: string;

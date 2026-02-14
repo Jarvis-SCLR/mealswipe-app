@@ -105,7 +105,7 @@ export async function recordDailyActivity(): Promise<StreakData> {
 }
 
 /**
- * Add streak protectors (from spin rewards)
+ * Add streak protectors
  */
 export async function addStreakProtectors(count: number): Promise<void> {
   const data = await getStreakData();

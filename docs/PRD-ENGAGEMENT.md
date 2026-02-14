@@ -69,16 +69,13 @@ MealSwipe is a Tinder-style meal planning app. This PRD covers the new engagemen
 
 ### 4. Gamification Layer
 
-**Daily Spin / Gacha:**
-- Free spin every 24h
-- Rewards: Premium recipe unlock, extra likes, profile badge, streak protector
-- Premium users: 3 spins per day
+~~**Daily Spin / Gacha:** (REMOVED - out of scope)~~
 
 **Streaks:**
 - Consecutive days opening app / planning meals
 - Visual streak counter
 - Streak rewards at milestones (7 days, 30 days, 100 days)
-- Streak protector item (from spins)
+- Streak protector item
 
 **Achievements / Badges:**
 - "Recipe Creator" - Upload first recipe
@@ -167,19 +164,6 @@ CREATE TABLE user_streaks (
 );
 ```
 
-### daily_spins
-```sql
-CREATE TABLE daily_spins (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES auth.users(id) NOT NULL,
-  spin_date DATE NOT NULL,
-  reward_type TEXT NOT NULL, -- 'recipe_unlock', 'extra_likes', 'badge', 'streak_protector'
-  reward_value TEXT,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  UNIQUE(user_id, spin_date)
-);
-```
-
 ### user_achievements
 ```sql
 CREATE TABLE user_achievements (
@@ -217,13 +201,7 @@ CREATE TABLE user_achievements (
 - Follow button
 - Recipe grid
 
-### 4. Daily Spin Wheel
-- Animated wheel with segments
-- Spin button (disabled if already spun today)
-- Reward reveal animation
-- "Share" option after win
-
-### 5. Achievements Screen
+### 4. Achievements Screen
 - Grid of badges (locked/unlocked)
 - Progress bars for in-progress achievements
 - Streak display with fire emoji
@@ -257,10 +235,9 @@ Use existing MealSwipe design system:
 4. Chef profile pages
 
 **Phase 3 (Growth):**
-1. Daily spin wheel
-2. Streak system
-3. Achievements
-4. Creator program onboarding
+1. Streak system
+2. Achievements
+3. Creator program onboarding
 
 ---
 
