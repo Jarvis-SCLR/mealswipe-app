@@ -2,67 +2,67 @@
   "fallback-1": {
     "filename": "fallback-1.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:35:08.830Z",
+    "generatedAt": "2026-02-14T20:41:43.546Z",
     "recipeName": "Classic Margherita Pizza"
   },
   "fallback-2": {
     "filename": "fallback-2.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:35:26.034Z",
+    "generatedAt": "2026-02-14T20:41:59.625Z",
     "recipeName": "Honey Garlic Salmon"
   },
   "fallback-3": {
     "filename": "fallback-3.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:35:48.578Z",
+    "generatedAt": "2026-02-14T20:42:18.044Z",
     "recipeName": "Vegetable Stir Fry"
   },
   "fallback-4": {
     "filename": "fallback-4.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:36:05.303Z",
+    "generatedAt": "2026-02-14T20:42:33.230Z",
     "recipeName": "Chicken Tikka Masala"
   },
   "fallback-5": {
     "filename": "fallback-5.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:36:25.098Z",
+    "generatedAt": "2026-02-14T20:42:58.900Z",
     "recipeName": "Classic Caesar Salad"
   },
   "local-1": {
     "filename": "local-1.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:36:42.017Z",
+    "generatedAt": "2026-02-14T20:43:13.987Z",
     "recipeName": "Classic Margherita Pizza"
   },
   "local-2": {
     "filename": "local-2.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:36:58.523Z",
+    "generatedAt": "2026-02-14T20:43:30.455Z",
     "recipeName": "Honey Garlic Salmon"
   },
   "local-3": {
     "filename": "local-3.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:37:15.407Z",
+    "generatedAt": "2026-02-14T20:43:45.599Z",
     "recipeName": "Thai Green Curry"
   },
   "local-4": {
     "filename": "local-4.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:37:32.267Z",
+    "generatedAt": "2026-02-14T20:44:04.930Z",
     "recipeName": "Mediterranean Grain Bowl"
   },
   "local-5": {
     "filename": "local-5.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:37:52.775Z",
+    "generatedAt": "2026-02-14T20:44:20.331Z",
     "recipeName": "Spicy Korean Fried Chicken"
   },
   "local-6": {
     "filename": "local-6.jpg",
     "mimeType": "image/jpeg",
-    "generatedAt": "2026-02-14T17:38:10.051Z",
+    "generatedAt": "2026-02-14T20:44:35.826Z",
     "recipeName": "Creamy Tuscan Pasta"
   }
 }

@@ -10,7 +10,8 @@ const fs = require('fs');
 const path = require('path');
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_IMAGE_MODEL = 'nano-banana-pro-preview'; // Nano Banana Pro for photorealistic images
+// Using Nano Banana Pro with simplified prompt for photorealism
+const GEMINI_IMAGE_MODEL = 'nano-banana-pro-preview';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_IMAGE_MODEL}:generateContent`;
 
 // Output directory for generated images
@@ -79,27 +80,89 @@ const FALLBACK_RECIPES = [
   },
 ];
 
-function buildImagePrompt(name, description) {
-  const cleanedDescription = description?.trim().replace(/\s+/g, ' ') || '';
-  const detailLine = cleanedDescription ? `\nDish: ${cleanedDescription}` : '';
+// Unique styling for each recipe - different angles, surfaces, plates
+const RECIPE_STYLES = {
+  'fallback-1': { // Margherita Pizza
+    angle: 'overhead flat lay',
+    surface: 'rustic wooden pizza peel',
+    lighting: 'dramatic side light with shadows',
+    extra: 'charred crust edges, bubbling cheese, fresh basil scattered'
+  },
+  'fallback-2': { // Honey Garlic Salmon
+    angle: '45 degree hero shot',
+    surface: 'dark slate plate on black marble',
+    lighting: 'moody window light from the left',
+    extra: 'fork flaking the fish, glistening glaze, sesame seeds'
+  },
+  'fallback-3': { // Vegetable Stir Fry
+    angle: 'slightly above, looking into wok',
+    surface: 'carbon steel wok on gas burner',
+    lighting: 'warm kitchen lighting with steam',
+    extra: 'chopsticks lifting vegetables, visible flames'
+  },
+  'fallback-4': { // Chicken Tikka Masala
+    angle: 'low angle, eye level with bowl',
+    surface: 'hammered copper bowl on dark fabric',
+    lighting: 'candlelit warm glow',
+    extra: 'naan bread dipping in, cilantro garnish, cream swirl'
+  },
+  'fallback-5': { // Caesar Salad
+    angle: 'overhead looking down',
+    surface: 'large white ceramic bowl on marble',
+    lighting: 'bright airy natural light',
+    extra: 'parmesan being shaved over top, lemon wedge'
+  },
+  'local-1': { // Margherita Pizza (variant)
+    angle: 'close-up slice pull with cheese stretch',
+    surface: 'pizza on wooden board, checkered napkin',
+    lighting: 'golden hour warm light',
+    extra: 'melted mozzarella stretching, basil leaves'
+  },
+  'local-2': { // Honey Garlic Salmon (variant)
+    angle: 'straight down overhead',
+    surface: 'white rectangular plate on light wood',
+    lighting: 'soft diffused daylight',
+    extra: 'asparagus side, lemon slices, herb garnish'
+  },
+  'local-3': { // Thai Green Curry
+    angle: '3/4 angle from front',
+    surface: 'clay bowl on bamboo mat',
+    lighting: 'natural window light, soft shadows',
+    extra: 'jasmine rice in separate bowl, thai basil, red chilies floating'
+  },
+  'local-4': { // Mediterranean Grain Bowl
+    angle: 'flat lay overhead',
+    surface: 'speckled ceramic bowl on concrete',
+    lighting: 'bright even lighting, minimal shadows',
+    extra: 'ingredients in sections, tahini drizzle being poured'
+  },
+  'local-5': { // Korean Fried Chicken
+    angle: 'close-up pile, eye level',
+    surface: 'black stone plate, newspaper underneath',
+    lighting: 'dramatic dark background, spotlight on food',
+    extra: 'sticky sauce dripping, sesame seeds, pickled radish side'
+  },
+  'local-6': { // Creamy Tuscan Pasta
+    angle: 'fork twirling pasta, mid-action',
+    surface: 'shallow pasta bowl on rustic table',
+    lighting: 'warm italian trattoria ambiance',
+    extra: 'sun-dried tomatoes visible, parmesan shavings falling'
+  }
+};
 
-  return `Editorial food photograph of "${name}" for a premium cookbook.${detailLine}
-
-CAMERA: Canon EOS R5, 100mm macro lens, f/2.8 aperture, ISO 100, 1/125s shutter speed. Shot tethered to capture station.
-
-LIGHTING: Single large softbox at 45° camera-left as key light. White bounce card camera-right for gentle fill. No harsh shadows. Natural window light feel, color temperature 5500K.
-
-COMPOSITION: 3/4 hero angle (not flat overhead). Rule of thirds placement. Negative space for text overlay. Shallow depth of field with bokeh on background elements.
-
-STYLING: Real restaurant plating on matte ceramic dishware. Imperfect, organic arrangement - not too symmetrical. Fresh herb garnish with visible texture. A few crumbs or sauce drips for authenticity. Linen napkin and vintage silverware as props. Weathered wood or marble surface.
-
-POST-PROCESSING: Subtle color grading. Slightly desaturated, natural tones. No HDR look. Film-like grain. Slight vignette.
-
-CRITICAL: Must look like an actual photograph taken in a food studio. Realistic food textures - visible steam, glistening oils, melted cheese pull. No plastic-looking surfaces. No oversaturation. No AI artifacts.`;
+function buildImagePrompt(name, description, recipeId) {
+  const style = RECIPE_STYLES[recipeId] || {
+    angle: '45 degree angle',
+    surface: 'ceramic plate on wood',
+    lighting: 'natural window light',
+    extra: 'garnished beautifully'
+  };
+  
+  return `Professional food photograph of ${name}. ${style.angle}. Served on ${style.surface}. ${style.lighting}. ${style.extra}. Tight crop filling frame. Shallow depth of field. Real photography not illustration.`;
 }
 
 async function generateImage(recipe) {
-  const prompt = buildImagePrompt(recipe.name, recipe.description);
+  const prompt = buildImagePrompt(recipe.name, recipe.description, recipe.id);
   
   console.log(`\n📸 Generating image for: ${recipe.name}`);
   
@@ -118,7 +181,7 @@ async function generateImage(recipe) {
         ],
         generationConfig: {
           responseModalities: ['IMAGE', 'TEXT'],
-          temperature: 0.8,
+          temperature: 0.4, // Lower temp for more realistic output
         },
       }),
     });
