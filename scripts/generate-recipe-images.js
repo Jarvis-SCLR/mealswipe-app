@@ -80,85 +80,35 @@ const FALLBACK_RECIPES = [
   },
 ];
 
-// Unique styling for each recipe - different angles, surfaces, plates
-const RECIPE_STYLES = {
-  'fallback-1': { // Margherita Pizza
-    angle: 'overhead flat lay',
-    surface: 'rustic wooden pizza peel',
-    lighting: 'dramatic side light with shadows',
-    extra: 'charred crust edges, bubbling cheese, fresh basil scattered'
-  },
-  'fallback-2': { // Honey Garlic Salmon
-    angle: '45 degree hero shot',
-    surface: 'dark slate plate on black marble',
-    lighting: 'moody window light from the left',
-    extra: 'fork flaking the fish, glistening glaze, sesame seeds'
-  },
-  'fallback-3': { // Vegetable Stir Fry
-    angle: 'slightly above, looking into wok',
-    surface: 'carbon steel wok on gas burner',
-    lighting: 'warm kitchen lighting with steam',
-    extra: 'chopsticks lifting vegetables, visible flames'
-  },
-  'fallback-4': { // Chicken Tikka Masala
-    angle: 'low angle, eye level with bowl',
-    surface: 'hammered copper bowl on dark fabric',
-    lighting: 'candlelit warm glow',
-    extra: 'naan bread dipping in, cilantro garnish, cream swirl'
-  },
-  'fallback-5': { // Caesar Salad
-    angle: 'overhead looking down',
-    surface: 'large white ceramic bowl on marble',
-    lighting: 'bright airy natural light',
-    extra: 'parmesan being shaved over top, lemon wedge'
-  },
-  'local-1': { // Margherita Pizza (variant)
-    angle: 'close-up slice pull with cheese stretch',
-    surface: 'pizza on wooden board, checkered napkin',
-    lighting: 'golden hour warm light',
-    extra: 'melted mozzarella stretching, basil leaves'
-  },
-  'local-2': { // Honey Garlic Salmon (variant)
-    angle: 'straight down overhead',
-    surface: 'white rectangular plate on light wood',
-    lighting: 'soft diffused daylight',
-    extra: 'asparagus side, lemon slices, herb garnish'
-  },
-  'local-3': { // Thai Green Curry
-    angle: '3/4 angle from front',
-    surface: 'clay bowl on bamboo mat',
-    lighting: 'natural window light, soft shadows',
-    extra: 'jasmine rice in separate bowl, thai basil, red chilies floating'
-  },
-  'local-4': { // Mediterranean Grain Bowl
-    angle: 'flat lay overhead',
-    surface: 'speckled ceramic bowl on concrete',
-    lighting: 'bright even lighting, minimal shadows',
-    extra: 'ingredients in sections, tahini drizzle being poured'
-  },
-  'local-5': { // Korean Fried Chicken
-    angle: 'close-up pile, eye level',
-    surface: 'black stone plate, newspaper underneath',
-    lighting: 'dramatic dark background, spotlight on food',
-    extra: 'sticky sauce dripping, sesame seeds, pickled radish side'
-  },
-  'local-6': { // Creamy Tuscan Pasta
-    angle: 'fork twirling pasta, mid-action',
-    surface: 'shallow pasta bowl on rustic table',
-    lighting: 'warm italian trattoria ambiance',
-    extra: 'sun-dried tomatoes visible, parmesan shavings falling'
-  }
+// Close-up home cooking shots - fills the frame, homemade feel
+const UNIQUE_PROMPTS = {
+  'fallback-1': 'Extreme close-up homemade margherita pizza filling entire frame, bubbling mozzarella texture visible, fresh basil leaves, on a simple cutting board, home kitchen counter, natural window light',
+  
+  'fallback-2': 'Close-up pan-seared salmon fillet filling frame, crispy skin texture, honey garlic glaze glistening, on a regular dinner plate, home dining table, evening indoor lighting',
+  
+  'fallback-3': 'Close-up vegetable stir fry filling the frame, colorful peppers broccoli carrots, glistening with sauce, in a regular frying pan, home stovetop, steam rising',
+  
+  'fallback-4': 'Close-up homemade chicken curry filling frame, creamy orange sauce, chunks of tender chicken, in a regular bowl, kitchen table, warm home lighting',
+  
+  'fallback-5': 'Close-up fresh caesar salad filling frame, crisp romaine leaves, shaved parmesan, croutons, in a mixing bowl, kitchen counter, bright daylight',
+  
+  'local-1': 'Extreme close-up pizza slice, melted cheese and tomato sauce visible, held on a regular plate, casual home setting, soft lighting',
+  
+  'local-2': 'Close-up baked salmon on dinner plate filling frame, flaky fish texture, lemon wedge, steamed vegetables, wooden dining table at home',
+  
+  'local-3': 'Close-up green curry in a bowl filling frame, coconut milk broth, vegetables floating, served with rice, home kitchen table, natural light',
+  
+  'local-4': 'Close-up grain bowl from above filling frame, quinoa chickpeas vegetables feta, colorful ingredients, regular bowl, kitchen counter, daylight',
+  
+  'local-5': 'Close-up crispy fried chicken pieces filling frame, golden brown coating, sticky sauce, on a regular plate, home kitchen, casual lighting',
+  
+  'local-6': 'Close-up creamy pasta filling frame, fettuccine in sauce, sun dried tomatoes spinach, in a pasta bowl, home dinner table, cozy lighting'
 };
 
 function buildImagePrompt(name, description, recipeId) {
-  const style = RECIPE_STYLES[recipeId] || {
-    angle: '45 degree angle',
-    surface: 'ceramic plate on wood',
-    lighting: 'natural window light',
-    extra: 'garnished beautifully'
-  };
-  
-  return `Professional food photograph of ${name}. ${style.angle}. Served on ${style.surface}. ${style.lighting}. ${style.extra}. Tight crop filling frame. Shallow depth of field. Real photography not illustration.`;
+  const basePrompt = UNIQUE_PROMPTS[recipeId] || `${name}, appetizing food photo`;
+  // Add portrait/vertical orientation for mobile card format
+  return `${basePrompt}, vertical portrait orientation, tall format photo, 9:16 aspect ratio`;
 }
 
 async function generateImage(recipe) {
@@ -181,7 +131,7 @@ async function generateImage(recipe) {
         ],
         generationConfig: {
           responseModalities: ['IMAGE', 'TEXT'],
-          temperature: 0.4, // Lower temp for more realistic output
+          temperature: 0.4,
         },
       }),
     });
@@ -227,6 +177,44 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Crop image to 9:16 portrait aspect ratio (center crop)
+async function cropToPortrait(filepath) {
+  const { execSync } = require('child_process');
+  try {
+    // Get current dimensions
+    const widthOut = execSync(`sips -g pixelWidth "${filepath}" | grep pixelWidth | awk '{print $2}'`).toString().trim();
+    const heightOut = execSync(`sips -g pixelHeight "${filepath}" | grep pixelHeight | awk '{print $2}'`).toString().trim();
+    const width = parseInt(widthOut);
+    const height = parseInt(heightOut);
+    
+    // Target 9:16 aspect ratio
+    const targetRatio = 9 / 16;
+    const currentRatio = width / height;
+    
+    let newWidth, newHeight, cropX, cropY;
+    
+    if (currentRatio > targetRatio) {
+      // Image is too wide, crop width
+      newHeight = height;
+      newWidth = Math.round(height * targetRatio);
+      cropX = Math.round((width - newWidth) / 2);
+      cropY = 0;
+    } else {
+      // Image is too tall, crop height
+      newWidth = width;
+      newHeight = Math.round(width / targetRatio);
+      cropX = 0;
+      cropY = Math.round((height - newHeight) / 2);
+    }
+    
+    // Crop using sips
+    execSync(`sips -c ${newHeight} ${newWidth} "${filepath}" --out "${filepath}"`);
+    console.log(`   📐 Cropped to 9:16 portrait (${newWidth}x${newHeight})`);
+  } catch (error) {
+    console.warn(`   ⚠️ Could not crop image: ${error.message}`);
+  }
+}
+
 async function main() {
   if (!GEMINI_API_KEY) {
     console.error('❌ GEMINI_API_KEY environment variable is required');
@@ -269,6 +257,9 @@ async function main() {
       const filepath = path.join(OUTPUT_DIR, filename);
       const buffer = Buffer.from(result.base64, 'base64');
       fs.writeFileSync(filepath, buffer);
+      
+      // Crop to 9:16 portrait for mobile cards
+      await cropToPortrait(filepath);
       
       // Update manifest
       manifest[recipe.id] = {
