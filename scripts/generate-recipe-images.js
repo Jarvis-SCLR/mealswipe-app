@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_IMAGE_MODEL = 'gemini-2.5-flash-image'; // Gemini image generation model
+const GEMINI_IMAGE_MODEL = 'nano-banana-pro-preview'; // Nano Banana Pro for photorealistic images
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_IMAGE_MODEL}:generateContent`;
 
 // Output directory for generated images
@@ -81,20 +81,21 @@ const FALLBACK_RECIPES = [
 
 function buildImagePrompt(name, description) {
   const cleanedDescription = description?.trim().replace(/\s+/g, ' ') || '';
-  const detailLine = cleanedDescription ? `\nDish details: ${cleanedDescription}` : '';
+  const detailLine = cleanedDescription ? `\nDish: ${cleanedDescription}` : '';
 
-  return `Create a high-resolution, photorealistic food photograph of "${name}".${detailLine}
+  return `Editorial food photograph of "${name}" for a premium cookbook.${detailLine}
 
-Style requirements:
-- Appetizing, restaurant-quality plating on a beautiful ceramic plate
-- Warm, natural lighting with gentle highlights and soft shadows
-- Shallow depth of field, crisp focus on the main dish
-- Vibrant, true-to-life colors that make the food look delicious
-- Professional food photography composition
-- Clean, minimalist background (marble, wood, or neutral surface)
-- No people, no text, no watermark, no logos
-- Overhead or 3/4 angle showing the best view of the dish
-- Include appropriate garnishes and props (herbs, utensils, ingredients)`;
+CAMERA: Canon EOS R5, 100mm macro lens, f/2.8 aperture, ISO 100, 1/125s shutter speed. Shot tethered to capture station.
+
+LIGHTING: Single large softbox at 45° camera-left as key light. White bounce card camera-right for gentle fill. No harsh shadows. Natural window light feel, color temperature 5500K.
+
+COMPOSITION: 3/4 hero angle (not flat overhead). Rule of thirds placement. Negative space for text overlay. Shallow depth of field with bokeh on background elements.
+
+STYLING: Real restaurant plating on matte ceramic dishware. Imperfect, organic arrangement - not too symmetrical. Fresh herb garnish with visible texture. A few crumbs or sauce drips for authenticity. Linen napkin and vintage silverware as props. Weathered wood or marble surface.
+
+POST-PROCESSING: Subtle color grading. Slightly desaturated, natural tones. No HDR look. Film-like grain. Slight vignette.
+
+CRITICAL: Must look like an actual photograph taken in a food studio. Realistic food textures - visible steam, glistening oils, melted cheese pull. No plastic-looking surfaces. No oversaturation. No AI artifacts.`;
 }
 
 async function generateImage(recipe) {
