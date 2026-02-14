@@ -70,6 +70,16 @@ Close-up crispy fried chicken pieces filling frame, golden brown coating, sticky
 Close-up creamy pasta filling frame, fettuccine in sauce, sun dried tomatoes spinach, in a pasta bowl, home dinner table, cozy lighting, vertical portrait orientation, tall format photo, 9:16 aspect ratio
 ```
 
+### local-7: Beef Tacos
+```
+Close-up beef tacos filling frame, seasoned ground beef in corn tortillas, fresh cilantro lime, diced onions, on a plate, home kitchen table, natural lighting, vertical portrait orientation, tall format photo, 9:16 aspect ratio
+```
+
+### local-8: Lemon Herb Roasted Chicken
+```
+Close-up roasted whole chicken filling frame, golden crispy skin, lemon slices herbs visible, in a roasting pan, home oven fresh, warm lighting, vertical portrait orientation, tall format photo, 9:16 aspect ratio
+```
+
 ---
 
 ## Model Settings
