@@ -635,7 +635,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   applianceItemSelected: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: '#FFF3E8',
     borderColor: Colors.verde,
   },
   applianceIconWrap: {
@@ -685,7 +685,7 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   optionPillSelected: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: '#FFF3E8',
     borderColor: Colors.verde,
   },
   optionPillDanger: {
@@ -789,7 +789,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   notifToggleActive: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: '#FFF3E8',
     borderColor: Colors.verde,
   },
   notifToggleText: {

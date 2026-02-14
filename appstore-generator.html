@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MealSwipe App Store Screenshots</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+    }
+    
+    .screenshot-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+    }
+    
+    .screenshot {
+      width: 1290px;
+      height: 2796px;
+      position: relative;
+      border-radius: 40px;
+      overflow: hidden;
+      transform: scale(0.25);
+      transform-origin: top left;
+      margin-bottom: -2097px;
+      margin-right: -967px;
+    }
+    
+    /* Screenshot 1: Swipe */
+    .screenshot-1 {
+      background: linear-gradient(180deg, #FF6B35 0%, #FF8F5C 50%, #FFA06E 100%);
+    }
+    
+    /* Screenshot 2: Menu */
+    .screenshot-2 {
+      background: linear-gradient(180deg, #4ECDC4 0%, #45B7AA 50%, #3DA99E 100%);
+    }
+    
+    /* Screenshot 3: Planner */
+    .screenshot-3 {
+      background: linear-gradient(180deg, #667EEA 0%, #5A6FD1 50%, #4F62BE 100%);
+    }
+    
+    /* Screenshot 4: Grocery */
+    .screenshot-4 {
+      background: linear-gradient(180deg, #F093FB 0%, #E673F0 50%, #D954E5 100%);
+    }
+    
+    /* Screenshot 5: Create */
+    .screenshot-5 {
+      background: linear-gradient(180deg, #FFD93D 0%, #F5C800 50%, #E6BB00 100%);
+    }
+    
+    .headline {
+      text-align: center;
+      color: white;
+      padding: 120px 80px 60px;
+      z-index: 10;
+      position: relative;
+    }
+    
+    .headline h1 {
+      font-size: 100px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 30px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    
+    .headline p {
+      font-size: 48px;
+      font-weight: 400;
+      opacity: 0.95;
+    }
+    
+    .device-frame {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 1950px;
+    }
+    
+    .device-bezel {
+      width: 100%;
+      height: 100%;
+      background: #1a1a1a;
+      border-radius: 90px;
+      padding: 20px;
+      box-shadow: 0 50px 100px rgba(0,0,0,0.3);
+    }
+    
+    .device-screen {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 70px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .device-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .dynamic-island {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 50px;
+      background: #000;
+      border-radius: 30px;
+      z-index: 20;
+    }
+    
+    /* Export button */
+    .export-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 30px;
+      background: #FF6B35;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    h2.section-title {
+      width: 100%;
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 24px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h2 class="section-title">MealSwipe App Store Screenshots (6.7" Display)</h2>
+  
+  <div class="screenshot-container">
+    <!-- Screenshot 1: Discover/Swipe -->
+    <div class="screenshot screenshot-1" id="screen1">
+      <div class="headline">
+        <h1>Swipe Right<br>on Dinner</h1>
+        <p>Find recipes you'll love with a single swipe</p>
+      </div>
+      <div class="device-frame">
+        <div class="device-bezel">
+          <div class="device-screen">
+            <div class="dynamic-island"></div>
+            <img src="screenshots/store-01-discover.png" alt="Discover screen">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Screenshot 2: Your Menu -->
+    <div class="screenshot screenshot-2" id="screen2">
+      <div class="headline">
+        <h1>Build Your<br>Weekly Menu</h1>
+        <p>Save favorites and plan meals your way</p>
+      </div>
+      <div class="device-frame">
+        <div class="device-bezel">
+          <div class="device-screen">
+            <div class="dynamic-island"></div>
+            <img src="screenshots/store-02-saved.png" alt="Menu screen">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Screenshot 3: Family Planning -->
+    <div class="screenshot screenshot-3" id="screen3">
+      <div class="headline">
+        <h1>Plan Together<br>as a Family</h1>
+        <p>Invite your household to vote on meals</p>
+      </div>
+      <div class="device-frame">
+        <div class="device-bezel">
+          <div class="device-screen">
+            <div class="dynamic-island"></div>
+            <img src="screenshots/store-03-plan.png" alt="Planner screen">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Screenshot 4: Grocery List -->
+    <div class="screenshot screenshot-4" id="screen4">
+      <div class="headline">
+        <h1>Shopping<br>Made Easy</h1>
+        <p>Auto-generated grocery lists from your menu</p>
+      </div>
+      <div class="device-frame">
+        <div class="device-bezel">
+          <div class="device-screen">
+            <div class="dynamic-island"></div>
+            <img src="screenshots/store-04-shop.png" alt="Grocery screen">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Screenshot 5: Welcome -->
+    <div class="screenshot screenshot-5" id="screen5">
+      <div class="headline">
+        <h1>Say Goodbye to<br>"What's for Dinner?"</h1>
+        <p>Meal planning, finally made fun</p>
+      </div>
+      <div class="device-frame">
+        <div class="device-bezel">
+          <div class="device-screen">
+            <div class="dynamic-island"></div>
+            <img src="screenshots/final-01-welcome.png" alt="Welcome screen">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Instructions: Open in browser, use DevTools > More tools > Rendering > Emulate CSS media type: screen
+    // Then screenshot each .screenshot element at 1290x2796 for 6.7" display
+    console.log('To export: Right-click each screenshot and use "Capture node screenshot" in DevTools');
+  </script>
+</body>
+</html>

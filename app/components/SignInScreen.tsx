@@ -14,7 +14,7 @@ import { useFonts } from '@expo-google-fonts/dm-sans';
 import { DMSans_400Regular, DMSans_500Medium, DMSans_700Bold } from '@expo-google-fonts/dm-sans';
 import { PlayfairDisplay_600SemiBold } from '@expo-google-fonts/playfair-display';
 import * as AppleAuthentication from 'expo-apple-authentication';
-import { authService, User } from '../services/authService';
+import { authService, useGoogleAuth, User } from '../services/authService';
 import { Ionicons } from '@expo/vector-icons';
 
 interface SignInScreenProps {
@@ -27,6 +27,9 @@ export default function SignInScreen({ onSignIn, onSkip }: SignInScreenProps) {
   const [appleAvailable, setAppleAvailable] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Google Auth hook
+  const { request, response, promptAsync } = useGoogleAuth();
+
   const [fontsLoaded] = useFonts({
     DMSans_400Regular,
     DMSans_500Medium,
@@ -37,6 +40,31 @@ export default function SignInScreen({ onSignIn, onSkip }: SignInScreenProps) {
   useEffect(() => {
     checkAppleAvailability();
   }, []);
+
+  // Handle Google auth response
+  useEffect(() => {
+    if (response?.type === 'success') {
+      handleGoogleAuthSuccess(response.authentication);
+    } else if (response?.type === 'error') {
+      setError(response.error?.message || 'Failed to sign in with Google');
+      setIsLoading(false);
+    } else if (response?.type === 'dismiss') {
+      setIsLoading(false);
+    }
+  }, [response]);
+
+  const handleGoogleAuthSuccess = async (authentication: { accessToken: string } | null) => {
+    try {
+      const user = await authService.processGoogleAuth(authentication);
+      if (user) {
+        onSignIn(user);
+      }
+    } catch (e: any) {
+      setError(e.message || 'Failed to sign in with Google');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const checkAppleAvailability = async () => {
     const available = await authService.isAppleSignInAvailable();
@@ -62,13 +90,9 @@ export default function SignInScreen({ onSignIn, onSkip }: SignInScreenProps) {
     setIsLoading(true);
     setError(null);
     try {
-      const user = await authService.signInWithGoogle();
-      if (user) {
-        onSignIn(user);
-      }
+      await promptAsync();
     } catch (e: any) {
       setError(e.message || 'Failed to sign in with Google');
-    } finally {
       setIsLoading(false);
     }
   };
@@ -127,7 +151,7 @@ export default function SignInScreen({ onSignIn, onSkip }: SignInScreenProps) {
             <TouchableOpacity
               style={styles.googleButton}
               onPress={handleGoogleSignIn}
-              disabled={isLoading}
+              disabled={isLoading || !request}
               activeOpacity={0.8}
             >
               <Ionicons name="logo-google" size={22} color="#333" />

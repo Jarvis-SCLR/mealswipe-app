@@ -6,6 +6,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from './supabase';
+import { getGeneratedRecipeImage } from './recipeImageService';
 
 export interface CommunityRecipe {
   id: string;
@@ -160,7 +161,7 @@ export async function getMyRecipes(): Promise<CommunityRecipe[]> {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return (data || []) as CommunityRecipe[];
+      return await applyGeneratedImagesToCommunity((data || []) as CommunityRecipe[]);
     } catch (error) {
       console.error('Error fetching recipes from Supabase:', error);
     }
@@ -169,7 +170,8 @@ export async function getMyRecipes(): Promise<CommunityRecipe[]> {
   // Local storage fallback
   try {
     const existing = await AsyncStorage.getItem(STORAGE_KEYS.MY_RECIPES);
-    return existing ? JSON.parse(existing) : [];
+    const recipes: CommunityRecipe[] = existing ? JSON.parse(existing) : [];
+    return await applyGeneratedImagesToCommunity(recipes);
   } catch {
     return [];
   }
@@ -189,7 +191,7 @@ export async function getCommunityRecipes(
         .range(offset, offset + limit - 1);
 
       if (error) throw error;
-      return (data || []) as CommunityRecipe[];
+      return await applyGeneratedImagesToCommunity((data || []) as CommunityRecipe[]);
     } catch (error) {
       console.error('Error fetching community recipes:', error);
     }
@@ -197,6 +199,35 @@ export async function getCommunityRecipes(
 
   // Return empty for local-only mode (no community)
   return [];
+}
+
+async function applyGeneratedImagesToCommunity(recipes: CommunityRecipe[]): Promise<CommunityRecipe[]> {
+  const results = await Promise.all(
+    recipes.map(async recipe => {
+      const primaryImage = recipe.image_urls?.[0] || '';
+      if (primaryImage.startsWith('data:image')) {
+        return recipe;
+      }
+
+      const generated = await getGeneratedRecipeImage({
+        id: recipe.id,
+        name: recipe.name,
+        description: recipe.description || `A delicious ${recipe.name} recipe.`,
+        image: primaryImage,
+      });
+
+      if (!generated || generated === primaryImage) {
+        return recipe;
+      }
+
+      return {
+        ...recipe,
+        image_urls: [generated, ...recipe.image_urls.filter(url => url !== generated)],
+      };
+    })
+  );
+
+  return results;
 }
 
 // ============ ENGAGEMENT ============

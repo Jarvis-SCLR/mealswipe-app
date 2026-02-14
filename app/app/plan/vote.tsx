@@ -17,6 +17,7 @@ import { Colors } from '../../constants/Colors';
 import { RecipeCard } from '../../components/RecipeCard';
 import { getWeeklyPlan, recordVote, type WeeklyPlan } from '../../services/householdStorage';
 import type { Recipe } from '../../services/recipeApi';
+import { applyGeneratedImages } from '../../services/recipeImageService';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -55,7 +56,8 @@ export default function PlanVoteScreen() {
       const fetchedPlan = await getWeeklyPlan(planId);
       if (fetchedPlan) {
         setPlan(fetchedPlan);
-        setRecipes(fetchedPlan.proposedRecipes);
+        const withImages = await applyGeneratedImages(fetchedPlan.proposedRecipes);
+        setRecipes(withImages);
       }
     } finally {
       setLoading(false);

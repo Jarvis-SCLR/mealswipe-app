@@ -1,10 +1,13 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Colors } from '../constants/Colors';
 import type { Recipe } from '../services/recipeApi';
+import { getGeneratedImage } from '../assets/generated-images';
+
+const BUNDLED_IMAGE_PREFIX = 'bundled://';
 
 const APPLIANCE_DATA: Record<string, { icon: string; iconSet: 'mci' | 'ion'; label: string }> = {
   'oven': { icon: 'stove', iconSet: 'mci', label: 'Oven' },
@@ -36,15 +39,28 @@ function ApplianceIcon({ appliance }: { appliance: string }) {
 // Extended recipe type that may include community flag
 type ExtendedRecipe = Recipe & { isCommunity?: boolean; creatorId?: string };
 
+// Resolve image source - handles bundled images and remote URLs
+function getImageSource(imageUrl: string): ImageSourcePropType {
+  if (imageUrl.startsWith(BUNDLED_IMAGE_PREFIX)) {
+    const recipeId = imageUrl.replace(BUNDLED_IMAGE_PREFIX, '');
+    const bundledAsset = getGeneratedImage(recipeId);
+    if (bundledAsset) {
+      return bundledAsset;
+    }
+  }
+  return { uri: imageUrl };
+}
+
 export function RecipeCard({ recipe }: { recipe: ExtendedRecipe }) {
   const primaryAppliance = recipe.appliances?.[0];
   const applianceData = primaryAppliance ? APPLIANCE_DATA[primaryAppliance] : null;
   const isCommunity = (recipe as ExtendedRecipe).isCommunity;
+  const imageSource = getImageSource(recipe.image);
   
   return (
     <View style={styles.card}>
       <View style={styles.imageWrap}>
-        <Image source={{ uri: recipe.image }} style={styles.image} />
+        <Image source={imageSource} style={styles.image} />
         <LinearGradient
           colors={['transparent', 'rgba(0,0,0,0.25)', 'rgba(0,0,0,0.78)']}
           locations={[0, 0.58, 1]}

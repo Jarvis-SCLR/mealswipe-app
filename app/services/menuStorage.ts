@@ -2,6 +2,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Recipe } from './recipeApi';
 import { recordRecipeAddToPlan } from './recipeApi';
+import { getGeneratedRecipeImage } from './recipeImageService';
 
 const MENU_STORAGE_KEY = 'savedMenuRecipes';
 
@@ -32,9 +33,10 @@ export async function saveRecipe(recipe: Recipe): Promise<void> {
     if (existing.find(r => r.id === recipe.id)) {
       return;
     }
-    
+    const image = await getGeneratedRecipeImage(recipe);
     const savedRecipe: SavedRecipe = {
       ...recipe,
+      image,
       savedAt: new Date().toISOString(),
     };
     

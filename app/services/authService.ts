@@ -1,7 +1,12 @@
 import * as AppleAuthentication from 'expo-apple-authentication';
-import { GoogleSignin, statusCodes, User as GoogleUser } from '@react-native-google-signin/google-signin';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
+import { makeRedirectUri } from 'expo-auth-session';
+
+// Complete any pending auth sessions
+WebBrowser.maybeCompleteAuthSession();
 
 export interface User {
   id: string;
@@ -13,11 +18,10 @@ export interface User {
 
 const USER_KEY = 'mealswipe_user';
 
-// Configure Google Sign In
-GoogleSignin.configure({
-  webClientId: '1081935763088-tnajr0tr00fjlssbsee100sblci5s2m2.apps.googleusercontent.com',
-  iosClientId: '1081935763088-4qf60k4369r5pitnlr2bbf5mipf8l1eo.apps.googleusercontent.com',
-});
+// Google OAuth config
+const GOOGLE_WEB_CLIENT_ID = '1081935763088-tnajr0tr00fjlssbsee100sblci5s2m2.apps.googleusercontent.com';
+const GOOGLE_IOS_CLIENT_ID = '1081935763088-4qf60k4369r5pitnlr2bbf5mipf8l1eo.apps.googleusercontent.com';
+const GOOGLE_ANDROID_CLIENT_ID = '1081935763088-tnajr0tr00fjlssbsee100sblci5s2m2.apps.googleusercontent.com';
 
 export const authService = {
   // Check if user is already logged in
@@ -82,39 +86,41 @@ export const authService = {
     }
   },
 
-  // Sign in with Google
-  async signInWithGoogle(): Promise<User | null> {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      
-      const googleUser = userInfo.data as GoogleUser;
-      if (!googleUser) return null;
+  // Get Google Auth config for the hook
+  getGoogleAuthConfig() {
+    return {
+      webClientId: GOOGLE_WEB_CLIENT_ID,
+      iosClientId: GOOGLE_IOS_CLIENT_ID,
+      androidClientId: GOOGLE_ANDROID_CLIENT_ID,
+    };
+  },
 
+  // Process Google auth response and return user
+  async processGoogleAuth(authentication: { accessToken: string } | null): Promise<User | null> {
+    if (!authentication?.accessToken) {
+      return null;
+    }
+
+    try {
+      // Fetch user info from Google
+      const response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
+        headers: { Authorization: `Bearer ${authentication.accessToken}` },
+      });
+      
+      const googleUser = await response.json();
+      
       const user: User = {
-        id: googleUser.user.id,
-        email: googleUser.user.email,
-        name: googleUser.user.name || 'Google User',
+        id: googleUser.id,
+        email: googleUser.email,
+        name: googleUser.name || 'Google User',
         provider: 'google',
-        photo: googleUser.user.photo || undefined,
+        photo: googleUser.picture || undefined,
       };
 
       await this.storeUser(user);
       return user;
-    } catch (error: any) {
-      console.error('Google Sign In Error:', error);
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // User canceled the sign-in flow
-        return null;
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // Operation (e.g. sign in) is in progress already
-        console.log('Sign in already in progress');
-        return null;
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // Play services not available or outdated
-        console.log('Play services not available');
-        return null;
-      }
+    } catch (error) {
+      console.error('Error fetching Google user info:', error);
       throw error;
     }
   },
@@ -122,13 +128,6 @@ export const authService = {
   // Sign out
   async signOut(): Promise<void> {
     try {
-      // Sign out from Google if signed in with Google
-      try {
-        await GoogleSignin.signOut();
-      } catch (e) {
-        // Ignore if not signed in with Google
-      }
-      
       // Clear stored user
       await SecureStore.deleteItemAsync(USER_KEY);
     } catch (error) {
@@ -142,3 +141,16 @@ export const authService = {
     return await AppleAuthentication.isAvailableAsync();
   },
 };
+
+// Export the Google auth hook for use in components
+export function useGoogleAuth() {
+  const config = authService.getGoogleAuthConfig();
+  
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    webClientId: config.webClientId,
+    iosClientId: config.iosClientId,
+    androidClientId: config.androidClientId,
+  });
+
+  return { request, response, promptAsync };
+}

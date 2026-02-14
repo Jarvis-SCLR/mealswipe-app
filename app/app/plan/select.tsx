@@ -19,6 +19,7 @@ import { Colors } from '../../constants/Colors';
 import { RecipeCard } from '../../components/RecipeCard';
 import { getSavedRecipes, type SavedRecipe } from '../../services/menuStorage';
 import { addProposedRecipe, getShareLink, getHousehold } from '../../services/householdStorage';
+import { applyGeneratedImages } from '../../services/recipeImageService';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -44,7 +45,8 @@ export default function PlanSelectScreen() {
     setLoading(true);
     try {
       const saved = await getSavedRecipes();
-      setRecipes(saved);
+      const withImages = await applyGeneratedImages(saved);
+      setRecipes(withImages);
     } finally {
       setLoading(false);
     }
@@ -412,4 +414,3 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
 });
-

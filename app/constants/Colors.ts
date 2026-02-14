@@ -1,21 +1,23 @@
 export const Colors = {
-  // Primary Teal Palette
-  primary: '#2AA876',
-  primaryLight: '#1ABC9C',
-  primaryDark: '#1E8A5E',
+  // Primary Orange Palette
+  primary: '#FF8C42',
+  primaryLight: '#FFA366',
+  primaryDark: '#E67632',
   // Legacy mappings
-  apricot: '#2AA876',
-  coral: '#2AA876',
-  pepe: '#1ABC9C',
+  apricot: '#FF8C42',
+  coral: '#FF6B6B',
+  pepe: '#FFB347',
   // Neutrals
   espresso: '#2D2420',
   caramello: '#FDFBF7',
   milk: '#FDFBF7',
   foam: '#FFFFFF',
-  mocha: '#6B8E8E',
-  oatmeal: '#E0E8E5',
+  mocha: '#8B7355',
+  oatmeal: '#F5E6D3',
   latte: '#A89A8F', // Light brown/tan for placeholders
   // Accent
-  verde: '#6B8E5E',
+  verde: '#FF8C42', // Orange accent (replaces green)
   cielo: '#4A90D9', // Sky blue for info/secondary actions
+  // Selection tints
+  selectedBg: '#FFF3E8', // Warm orange tint for selected states
 } as const;

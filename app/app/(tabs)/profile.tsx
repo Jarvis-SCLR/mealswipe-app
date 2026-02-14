@@ -425,7 +425,7 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   optionPillSelected: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: '#FFF3E8',
     borderColor: Colors.verde,
   },
   optionPillDanger: {

@@ -2,6 +2,7 @@ import React, { useCallback, useState, useMemo } from 'react';
 import {
   ActivityIndicator,
   Image,
+  ImageSourcePropType,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -17,6 +18,22 @@ import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 import { getSavedRecipes, removeRecipe, type SavedRecipe } from '../../services/menuStorage';
 import { MealType } from '../../services/recipeApi';
+import { applyGeneratedImages } from '../../services/recipeImageService';
+import { getGeneratedImage } from '../../assets/generated-images';
+
+const BUNDLED_IMAGE_PREFIX = 'bundled://';
+
+// Resolve image source - handles bundled images and remote URLs
+function getImageSource(imageUrl: string): ImageSourcePropType {
+  if (imageUrl.startsWith(BUNDLED_IMAGE_PREFIX)) {
+    const recipeId = imageUrl.replace(BUNDLED_IMAGE_PREFIX, '');
+    const bundledAsset = getGeneratedImage(recipeId);
+    if (bundledAsset) {
+      return bundledAsset;
+    }
+  }
+  return { uri: imageUrl };
+}
 
 // Meal type folder configuration
 const MEAL_FOLDERS: { type: MealType | 'all'; label: string; icon: string; color: string }[] = [
@@ -34,6 +51,7 @@ export default function MenuScreen() {
   const [recipes, setRecipes] = useState<SavedRecipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState<MealType | 'all'>('all');
 
   // Reload recipes when screen comes into focus
@@ -47,6 +65,12 @@ export default function MenuScreen() {
     const saved = await getSavedRecipes();
     setRecipes(saved);
     setLoading(false);
+    if (saved.length > 0) {
+      setImageLoading(true);
+      const withImages = await applyGeneratedImages(saved);
+      setRecipes(withImages);
+      setImageLoading(false);
+    }
   };
 
   const onRefresh = async () => {
@@ -104,6 +128,13 @@ export default function MenuScreen() {
         <Text style={styles.headerTitle}>Your Menu</Text>
         <Text style={styles.headerCount}>{recipes.length} saved</Text>
       </View>
+
+      {imageLoading && (
+        <View style={styles.imageLoadingBanner}>
+          <ActivityIndicator size="small" color={Colors.espresso} />
+          <Text style={styles.imageLoadingText}>Generating AI images...</Text>
+        </View>
+      )}
 
       {/* Folder/Category Tabs */}
       <ScrollView 
@@ -189,7 +220,7 @@ export default function MenuScreen() {
               activeOpacity={0.9}
               onPress={() => openRecipe(recipe)}
             >
-              <Image source={{ uri: recipe.image }} style={styles.recipeImage} />
+              <Image source={getImageSource(recipe.image)} style={styles.recipeImage} />
               
               {/* Meal type badge */}
               {recipe.mealType && (
@@ -258,6 +289,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     marginBottom: 16,
+  },
+  imageLoadingBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: Colors.latte,
+    marginHorizontal: 20,
+    marginBottom: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+  },
+  imageLoadingText: {
+    fontFamily: 'DM Sans Medium',
+    fontSize: 12,
+    color: Colors.espresso,
   },
   headerTitle: {
     fontSize: 28,

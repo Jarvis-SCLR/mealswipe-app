@@ -1,0 +1,68 @@
+{
+  "fallback-1": {
+    "filename": "fallback-1.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:48:01.627Z",
+    "recipeName": "Classic Margherita Pizza"
+  },
+  "fallback-2": {
+    "filename": "fallback-2.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:48:10.316Z",
+    "recipeName": "Honey Garlic Salmon"
+  },
+  "fallback-3": {
+    "filename": "fallback-3.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:48:18.664Z",
+    "recipeName": "Vegetable Stir Fry"
+  },
+  "fallback-4": {
+    "filename": "fallback-4.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:48:29.067Z",
+    "recipeName": "Chicken Tikka Masala"
+  },
+  "fallback-5": {
+    "filename": "fallback-5.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:48:37.933Z",
+    "recipeName": "Classic Caesar Salad"
+  },
+  "local-1": {
+    "filename": "local-1.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:48:46.872Z",
+    "recipeName": "Classic Margherita Pizza"
+  },
+  "local-2": {
+    "filename": "local-2.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:48:55.932Z",
+    "recipeName": "Honey Garlic Salmon"
+  },
+  "local-3": {
+    "filename": "local-3.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:49:04.778Z",
+    "recipeName": "Thai Green Curry"
+  },
+  "local-4": {
+    "filename": "local-4.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:49:13.137Z",
+    "recipeName": "Mediterranean Grain Bowl"
+  },
+  "local-5": {
+    "filename": "local-5.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:49:21.573Z",
+    "recipeName": "Spicy Korean Fried Chicken"
+  },
+  "local-6": {
+    "filename": "local-6.png",
+    "mimeType": "image/png",
+    "generatedAt": "2026-02-14T15:49:29.727Z",
+    "recipeName": "Creamy Tuscan Pasta"
+  }
+}

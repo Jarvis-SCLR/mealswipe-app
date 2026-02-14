@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
+  ImageSourcePropType,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -16,6 +17,22 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { Colors } from '../../constants/Colors';
 import { getRecipeById, type Recipe } from '../../services/recipeApi';
 import { saveRecipe } from '../../services/menuStorage';
+import { getGeneratedRecipeImage } from '../../services/recipeImageService';
+import { getGeneratedImage } from '../../assets/generated-images';
+
+const BUNDLED_IMAGE_PREFIX = 'bundled://';
+
+// Resolve image source - handles bundled images and remote URLs
+function getImageSource(imageUrl: string): ImageSourcePropType {
+  if (imageUrl.startsWith(BUNDLED_IMAGE_PREFIX)) {
+    const recipeId = imageUrl.replace(BUNDLED_IMAGE_PREFIX, '');
+    const bundledAsset = getGeneratedImage(recipeId);
+    if (bundledAsset) {
+      return bundledAsset;
+    }
+  }
+  return { uri: imageUrl };
+}
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -147,10 +164,39 @@ export default function RecipeDetailModal() {
   const { id, recipeData } = useLocalSearchParams<{ id?: string; recipeData?: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
+  const [imageLoading, setImageLoading] = useState(false);
 
   useEffect(() => {
     loadRecipe();
   }, [id, recipeData]);
+
+  const imageKey = useMemo(() => {
+    if (!recipe) return '';
+    return `${recipe.id}::${recipe.name}::${recipe.description || ''}`;
+  }, [recipe?.id, recipe?.name, recipe?.description]);
+
+  useEffect(() => {
+    if (!recipe) return;
+    if (recipe.image?.startsWith('data:image')) return;
+
+    let isActive = true;
+    setImageLoading(true);
+
+    getGeneratedRecipeImage(recipe)
+      .then((image) => {
+        if (!isActive) return;
+        if (image && image !== recipe.image) {
+          setRecipe((prev) => (prev ? { ...prev, image } : prev));
+        }
+      })
+      .finally(() => {
+        if (isActive) setImageLoading(false);
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, [imageKey]);
 
   const loadRecipe = async () => {
     if (!id) {
@@ -241,7 +287,13 @@ export default function RecipeDetailModal() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.heroWrap}>
-          <Image source={{ uri: recipe.image }} style={styles.heroImage} />
+          <Image source={getImageSource(recipe.image)} style={styles.heroImage} />
+          {imageLoading && (
+            <View style={styles.heroLoading}>
+              <ActivityIndicator size="large" color={Colors.foam} />
+              <Text style={styles.heroLoadingText}>Generating AI image...</Text>
+            </View>
+          )}
           <SafeAreaView style={styles.heroSafe}>
             <Pressable
               onPress={() => router.back()}

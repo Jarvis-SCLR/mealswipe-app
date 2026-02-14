@@ -10,19 +10,18 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 
 import { Colors } from '../../constants/Colors';
 import { RecipeCard } from '../../components/RecipeCard';
 import {
-  getRecipes,
   getRecipesWithCommunity,
   getUserPreferences,
   filterRecipesByPreferences,
   recordRecipeLike,
   type Recipe,
 } from '../../services/recipeApi';
+import { applyGeneratedImages } from '../../services/recipeImageService';
 import { saveRecipe, getSavedCount } from '../../services/menuStorage';
 import { useSubscription, FREE_LIMITS } from '../../contexts/SubscriptionContext';
 
@@ -54,15 +53,13 @@ export default function SwipeDeckScreen() {
       const filtered = filterRecipesByPreferences(fetched, prefs);
       const result = filtered.length > 0 ? filtered : fetched;
       // If API failed and returned empty, use hardcoded fallback
-      if (result.length === 0) {
-        setRecipes(getLocalFallbackRecipes());
-      } else {
-        setRecipes(result);
-      }
+      const baseRecipes = result.length === 0 ? getLocalFallbackRecipes() : result;
+      setRecipes(await applyGeneratedImages(baseRecipes));
     } catch (error) {
       console.warn('Error loading recipes:', error);
       // Use local fallback on any error
-      setRecipes(getLocalFallbackRecipes());
+      const fallback = getLocalFallbackRecipes();
+      setRecipes(await applyGeneratedImages(fallback));
     } finally {
       setLoading(false);
     }
@@ -195,15 +192,6 @@ export default function SwipeDeckScreen() {
   const current = recipes[index];
   const next = recipes[index + 1];
 
-  const openDetails = () => {
-    if (!current) return;
-    // Pass recipe data as URL params for local recipes
-    router.push({
-      pathname: `/recipe/${current.id}`,
-      params: { recipeData: JSON.stringify(current) }
-    });
-  };
-
   const resetCard = () => {
     Animated.spring(position, {
       toValue: { x: 0, y: 0 },
@@ -228,7 +216,8 @@ export default function SwipeDeckScreen() {
       // Fetch more recipes with 30% community recipes mixed in
       const more = await getRecipesWithCommunity(20, 0.3);
       const filtered = filterRecipesByPreferences(more, prefs);
-      setRecipes(prev => [...prev, ...filtered]);
+      const withImages = await applyGeneratedImages(filtered);
+      setRecipes(prev => [...prev, ...withImages]);
     } catch (error) {
       console.warn('Error loading more recipes:', error);
     }
@@ -395,12 +384,6 @@ export default function SwipeDeckScreen() {
           <Text style={[styles.actionText, { color: Colors.pepe }]}>✕</Text>
         </Pressable>
         <Pressable
-          style={[styles.actionPill, styles.actionPillCenter]}
-          onPress={openDetails}
-        >
-          <Text style={styles.actionText}>🤤</Text>
-        </Pressable>
-        <Pressable
           style={styles.actionPill}
           onPress={() => completeSwipe('right')}
         >
@@ -537,11 +520,6 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 6 },
     elevation: 6,
-  },
-  actionPillCenter: {
-    width: 74,
-    height: 74,
-    borderRadius: 37,
   },
   actionText: {
     fontSize: 22,
