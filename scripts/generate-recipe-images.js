@@ -78,6 +78,16 @@ const FALLBACK_RECIPES = [
     name: 'Creamy Tuscan Pasta',
     description: 'Sun-dried tomatoes and spinach in a garlic cream sauce.',
   },
+  {
+    id: 'local-7',
+    name: 'Beef Tacos',
+    description: 'Seasoned ground beef with fresh toppings in corn tortillas.',
+  },
+  {
+    id: 'local-8',
+    name: 'Lemon Herb Roasted Chicken',
+    description: 'Juicy whole chicken with herbs and crispy golden skin.',
+  },
 ];
 
 // Close-up home cooking shots - fills the frame, homemade feel
@@ -102,7 +112,11 @@ const UNIQUE_PROMPTS = {
   
   'local-5': 'Close-up crispy fried chicken pieces filling frame, golden brown coating, sticky sauce, on a regular plate, home kitchen, casual lighting',
   
-  'local-6': 'Close-up creamy pasta filling frame, fettuccine in sauce, sun dried tomatoes spinach, in a pasta bowl, home dinner table, cozy lighting'
+  'local-6': 'Close-up creamy pasta filling frame, fettuccine in sauce, sun dried tomatoes spinach, in a pasta bowl, home dinner table, cozy lighting',
+  
+  'local-7': 'Close-up beef tacos filling frame, seasoned ground beef in corn tortillas, fresh cilantro lime, diced onions, on a plate, home kitchen table, natural lighting',
+  
+  'local-8': 'Close-up roasted whole chicken filling frame, golden crispy skin, lemon slices herbs visible, in a roasting pan, home oven fresh, warm lighting'
 };
 
 function buildImagePrompt(name, description, recipeId) {

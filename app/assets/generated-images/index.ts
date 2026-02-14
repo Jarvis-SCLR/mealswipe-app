@@ -16,6 +16,8 @@ export const generatedImages: Record<string, any> = {
   'local-4': require('./local-4.jpg'),
   'local-5': require('./local-5.jpg'),
   'local-6': require('./local-6.jpg'),
+  'local-7': require('./local-7.jpg'),
+  'local-8': require('./local-8.jpg'),
 };
 
 /**
