@@ -9,6 +9,17 @@ node_modules/
 .env.*.local
 api/.env
 
+# Credentials & Secrets
+**/APPLE_PASSWORD*
+**/password*
+**/secret*
+*.pem
+*.p8
+*.p12
+credentials.json
+google-services.json
+GoogleService-Info.plist
+
 # Build outputs
 dist/
 build/
